@@ -1,0 +1,637 @@
+﻿#AI3-WebChat body {
+    background-color: transparent;
+}
+
+/** 上方無障礙 */
+#AI3-WebChat .accesskey_U {
+    color: #ffffff;
+}
+
+/** 輸入框 */
+#AI3-WebChat .EditorZone {
+    border-top: 1px solid #ffb73b;
+}
+
+/** RichMenu 按鈕區塊 */
+#AI3-WebChat .RichMenuZone {
+    padding: 5px 15px 0px 15px;
+    background-color: #ffffff;
+    border-top: 1px solid #337ab7;
+}
+
+/** QuickReply 區塊 */
+#ToolZone {
+    /* background: transparent; */
+}
+
+/** 聊天室右側訊息 */
+#AI3-WebChat .ChatMessageRight .ChatMessageContent {
+    border: 1px solid #ffffff;
+    background-color: #ffffff;
+    color: #000000;
+}
+
+#AI3-WebChat .ChatMessageRight .ChatMessageContent:hover {
+    border: 1px solid #ffffff;
+    background-color: #ffffff;
+    color: #000000;
+}
+
+/** 聊天室左側訊息 */
+#AI3-WebChat .ChatMessageLeft .ChatMessageContent {
+    background: var(--Message-color-1966-BG-Left, #FFEAC7);
+
+    border: 1px solid #FFEAC7;
+    background-color: #FFEAC7;
+    color: #000000;
+}
+
+#AI3-WebChat .ChatMessageLeft .ChatMessageContent:hover {
+    border: 1px solid #FFEAC7;
+    background-color: #FFEAC7;
+    color: #000000;
+}
+
+/** 聊天室所有訊息 */
+ 
+
+/** 檔案格式顯示狀態與大小文字 */
+#AI3-WebChat .ChatMessage.ChatMessageRight .ChatMessageFileContentInfo {
+    color: #fff;
+}
+
+/** 檔案格式顯示下載文字 */
+#AI3-WebChat .ChatMessage.ChatMessageRight .Link[href] {
+    color: #fff;
+}
+
+#AI3-WebChat .ChatMessage.ChatMessageRight .link-text {
+    color: #fff !important;
+}
+
+/** 輸入超連結文字 */
+.ChatMessage.ChatMessageRight label[action] {
+    color: #fff;
+}
+
+/** QuickReply 樣式 */
+#AI3-WebChat .QuickreplySlide {
+    padding: 0px !important;
+    height: 30px !important;
+    font-size: 0.58rem;
+    background-color: #337ab7;
+    color: #fff;
+}
+
+#ToolZone>.swiper-container>.QuickReply_Vertical>.QuickreplySlide {
+    background: #337ab7 !important;
+    border: 1px solid #337ab7 !important;
+}
+
+/** Header 跟 Bar 的背景色 */
+#AI3-WebChat .bg-color {
+    background-color: #ffffff !important;
+}
+
+/** Header 跟 Bar 的文字顏色 */
+#AI3-WebChat .font-color {
+    color: #337ab7 !important;
+}
+#AI3-WebChat #RestartChatButton {
+    color: #FF8F1F !important;
+}
+/** 卡片背景色 */
+#AI3-WebChat .cardsSlide {
+    background-color: white;
+}
+
+/** 會員機制下方按鈕區塊 */
+#AI3-WebChat .dynamic_tab {
+    border-top: solid #337ab7 1px;
+}
+
+/** 上傳頭像按鈕背景色 */
+#AI3-WebChat .avatar_box .potrait .avatar_pic {
+    background-color: white;
+}
+
+/** 上傳頭像按鈕背 */
+#AI3-WebChat .avatar_box .potrait .avatar_pic .avatar_pic_icon {
+    background: url(../../image/06/camera.svg) no-repeat center center;
+}
+
+/** 彈跳視窗關閉按鈕 */
+#AI3-WebChat .modal-header button {
+    color: #fff !important;
+}
+
+#AI3-WebChat .modal-header button:hover {
+    color: #aadaff !important;
+    text-shadow: 4px 4px 3px rgba(20%, 20%, 40%, 0.5) !important;
+}
+
+/** 彈跳視窗文字 */
+#AI3-WebChat .modal-header div {
+    color: white;
+}
+
+/** 彈跳視窗 Header */
+#AI3-WebChat .modal-header {
+    background-color: #ffb73b;
+}
+
+/** 彈跳視窗 Footer */
+#AI3-WebChat .modal-footer div>button {
+    background-color: #ffb73b !important;
+    color: white !important;
+}
+
+/** 功能選單 */
+#dropdown-menu {
+    background-color: white;
+}
+
+/** 功能選單文字 */
+#dropdown-menu>li>span {
+    color: #337ab7;
+}
+/** 功能選單水平線 */
+#AI3-WebChat .dropdown-menu .divider {
+    /* Dropdown Menu  Divider */
+    background-color: #337ab7;
+}
+
+/** 語言選單圖示 */
+#AI3-WebChat #flag-icon-en {
+    background: url(../../image/06/i18n_en_us.svg) no-repeat center center;
+    background-size: contain;
+  }
+#AI3-WebChat #flag-icon-tc {
+    background: url(../../image/06/i18n_zh_tw.svg) no-repeat center center;
+    background-size: contain;
+}
+#AI3-WebChat #flag-icon-sc {
+    background: url(../../image/06/i18n_zh_cn.svg) no-repeat center center;
+    background-size: contain;
+}
+#AI3-WebChat #flag-icon-jp {
+    background: url(../../image/06/i18n_ja_jp.svg) no-repeat center center;
+    background-size: contain;
+}
+
+/** 語言選單文字 */
+#Zh_tw_Button{
+    color: #337ab7 !important;
+}
+#En_us_Button{
+    color: #337ab7 !important;
+}
+#Ja_jp_Button{
+    color: #337ab7 !important;
+}
+#Zh_cn_Button{
+    color: #337ab7 !important;
+}
+
+/** 忘記密碼按鈕 */
+#forgetPasswordlink {
+    background-color: #337ab7 !important;
+    color: white !important;
+    font-weight: bold;
+}
+
+/** 忘記密碼按鈕 */
+#registerAcount {
+    font-weight: bold;
+    background-color: #337ab7 !important;
+    color: white !important;
+}
+
+/** 立即登入按鈕 */
+#loginbtn {
+    font-weight: bold;
+    background-color: #337ab7 !important;
+    color: white !important;
+}
+
+/** 全滿寬度按鈕 */
+#AI3-WebChat .fullwidthBtn:hover {
+    box-shadow: 4px 4px 3px rgba(20%, 20%, 40%, 0.5);
+}
+
+#AI3-WebChat .btn {
+    background-color: #337ab7 !important;
+    color: white !important;
+}
+
+/* 個人資訊 - 修改暱稱按鈕 */
+#AI3-WebChat .avatar_nickname_edit {
+    color: #337ab7;
+}
+
+/* 新增服務紀錄 - 送出按鈕 */
+#s_submit {
+    background: transparent;
+    border: solid 2px #337ab7;
+    font-weight: bold;
+    color: #337ab7;
+}
+
+/** WebCall 按鈕 */
+#webmakecallbtn {
+    color: #337ab7;
+}
+
+#webmakecallbtn:hover {
+    color: #3db9ea;
+}
+
+/** 會員機制上方 Header */
+#AI3-WebChat .rightZoneHeader {
+    border-bottom: solid 2px #337ab7;
+}
+
+/** 聊天室訊息內容 */
+#MessageList {
+    bottom: 45px;
+    padding: 0px 16px;
+}
+#nvbarTitle{
+    color: #000000;
+}
+
+/** 聊天室區域 */
+#ChatZone {
+    top: 45px;
+}
+
+/** 關閉 WebChat 按鈕 */
+#AI3-WebChat .leave-chat {
+    width: 20px;
+    height: 20px;
+    background: url(../../image/06/close.svg) no-repeat center center;
+}
+
+#AI3-WebChat .leave-chat:hover {
+    background: url(../../image/06/close-hover.svg) no-repeat center center;
+}
+
+/** 切換輸入框按鈕 */
+#ChangeEditorButton {
+    background: url(../../image/06/keyboard.svg) no-repeat center center;
+}
+
+#ChangeEditorButton:hover {
+    background: url(../../image/06/keyboard-hover.svg) no-repeat center center;
+}
+
+/** 切換 RichMenu 按鈕 */
+#ChangeRichMenuButton {
+    background: url(../../image/06/richmenu.png) no-repeat center center;
+    background-size: contain;
+}
+
+#ChangeRichMenuButton:hover {
+    background: url(../../image/06/richmenu-hover.png) no-repeat center center;
+    background-size: contain;
+}
+
+/** 送出按鈕 */
+#SendButton {
+    background: url(../../image/06/sendIcon1.svg);
+    background-size: contain;
+    height: 26px !important;
+    background-repeat: no-repeat;
+}
+
+#SendButton:hover {
+    background: url(../../image/06/sendIcon3.svg);
+    background-size: contain;
+    height: 26px !important;
+    background-repeat: no-repeat;
+}
+
+#SendButton.active {
+    background: url(../../image/06/sendIcon2.svg);
+    background-size: contain;
+    height: 26px !important;
+    background-repeat: no-repeat;
+}
+
+#audio-wave {
+    background: url(../../image/06/audio-wave.gif);
+    background-size: contain;
+    height: 26px !important;
+    background-repeat: no-repeat;
+    margin-left: 5px;
+}
+
+/** 語音輸入按鈕 */
+#SpeechToTextBtn {
+    background: url(../../image/06/mic.svg);
+    background-size: contain;
+    height: 26px !important;
+    background-repeat: no-repeat;
+    /* margin-left: 5px; */
+}
+
+/** 語音輸入結束按鈕 */
+#SpeechToTextEndBtn {
+    background: url(../../image/06/mic-animate.svg);
+    background-size: contain;
+    height: 26px !important;
+    background-repeat: no-repeat;
+    /* margin-left: 5px; */
+}
+
+/** 答案語音播放按鈕 */
+#play-tts-btn {
+    background: url(../../image/06/speaker.svg);
+    background-size: contain;
+    height: 14px !important;
+    width: 14px !important;
+    background-repeat: no-repeat;
+}
+
+/** 預設開啟播音按鈕 */
+#DefaultStartTTSBtn {
+    background: url(../../image/06/speaker-on.png);
+    background-size: contain;
+    height: 26px !important;
+    background-repeat: no-repeat;
+    margin-left: 5px;
+}
+
+/** 預設關閉播音按鈕 */
+#DefaultCloseTTSBtn {
+    background: url(../../image/06/speaker-mute.png);
+    background-size: contain;
+    height: 26px !important;
+    background-repeat: no-repeat;
+    margin-left: 5px;
+}
+
+/** (貓頭左)收合右側視窗按鈕圖示 */
+#AI3-WebChat .collapseRightZone_left {
+    background: url(../../image/06/angle-left-solid.svg) no-repeat center center;
+}
+
+#AI3-WebChat .collapseRightZone_left:hover {
+    background: url(../../image/06/angle-left-solid-hover.svg) no-repeat center center;
+}
+/** (貓頭右)收合右側視窗按鈕圖示 */
+#AI3-WebChat .collapseRightZone_right {
+    background: url(../../image/06/angle-right-solid.svg) no-repeat center center;
+}
+
+#AI3-WebChat .collapseRightZone_right:hover {
+    background: url(../../image/06/angle-right-solid-hover.svg) no-repeat center center;
+}
+
+/** 轉接真人按鈕 */
+#ApplyAgentButton {
+    background: url(../../image/06/chat.svg) no-repeat center center;
+    background-size: contain;
+}
+
+#ApplyAgentButton:hover {
+    background: url(../../image/06/chat-hover.svg) no-repeat center center;
+    background-size: contain;
+}
+
+/** 上傳檔案按鈕 */
+#AttachmentButton {
+    background: url(../../image/06/attachment.svg) no-repeat center center;
+    background-size: contain;
+}
+
+#AttachmentButton:hover {
+    background: url(../../image/06/attachment-hover.svg) no-repeat center center;
+    background-size: contain;
+}
+
+/** 上傳圖片按鈕 */
+#ImageButton {
+    background: url(../../image/06/image2.png) no-repeat center center;
+    background-size: contain;
+}
+
+#ImageButton:hover {
+    background: url(../../image/06/image2-hover.png) no-repeat center center;
+    background-size: contain;
+}
+
+/** 表情按鈕 */
+#EmojiButton {
+    background: url(../../image/06/emoji-happy.svg) no-repeat center center;
+    background-size: contain;
+}
+
+#EmojiButton:hover {
+    background: url(../../image/06/emoji-happy-hover.svg) no-repeat center center;
+    background-size: contain;
+}
+
+/** 功能選單按鈕 */
+#hamburger-menu {
+    background: url(../../image/06/list.svg) no-repeat center center;
+    background-size: contain;
+}
+
+#hamburger-menu:hover {
+    background: url(../../image/06/list-hover.svg) no-repeat center center;
+    background-size: contain;
+}
+
+/** 字體大小按鈕 */
+#fontsize-menu {
+    width: 20px;
+    height: 20px;
+    background: url(../../image/06/fontSizeHelf.svg) no-repeat center center;
+    background-size: contain;
+}
+
+#fontsize-menu:hover {
+    background: url(../../image/06/fontSizeHelf-hover.svg) no-repeat center center;
+    background-size: contain;
+}
+
+/** 會員機制頁面 */
+#AI3-WebChat .dynamic_cont {
+    background-image: url(../../image/06/back.jpg);
+}
+
+/** 個人資訊按鈕 */
+#AI3-WebChat .member .dynamic_tab_icon {
+    background: url(../../image/06/people_setup.svg) no-repeat center center;
+    background-size: contain;
+}
+
+#AI3-WebChat .member.active .dynamic_tab_icon {
+    background: url(../../image/06/people_setup-active.svg) no-repeat center center;
+    background-size: contain;
+}
+
+/** 新增服務紀錄按鈕 */
+#AI3-WebChat .addservicerecord .dynamic_tab_icon {
+    background: url(../../image/06/servicecase.png) no-repeat center center;
+    background-size: contain;
+}
+
+#AI3-WebChat .addservicerecord.active .dynamic_tab_icon {
+    background: url(../../image/06/servicecase-active.png) no-repeat center center;
+    background-size: contain;
+}
+
+/** 服務紀錄按鈕 */
+#AI3-WebChat .servicerecord .dynamic_tab_icon {
+    background: url(../../image/06/list.png) no-repeat center center;
+    background-size: contain;
+}
+
+#AI3-WebChat .servicerecord.active .dynamic_tab_icon {
+    background: url(../../image/06/list-active.png) no-repeat center center;
+    background-size: contain;
+}
+
+/** 卡片切換按鈕 */
+#AI3-WebChat .swiper-button-next {
+    background-image: url("../../image/06/swiper_arrow_prev.svg");
+}
+
+#AI3-WebChat .swiper-button-prev {
+    background-image: url("../../image/06/swiper_arrow_next.svg");
+}
+
+/** 登入按鈕 */
+#LoginButton {
+    background: url(../../image/06/user-solid.svg) no-repeat center center;
+    background-size: contain;
+}
+
+#LoginButton:hover {
+    background: url(../../image/06/user-solid-hover.svg) no-repeat center center;
+    background-size: contain;
+}
+
+/** 輸入框區域 */
+#Editor {
+    /* border: 1px solid #337ab7; */
+}
+
+/** 按鈕 */
+#AI3-WebChat .btn_box button {
+    background: #337ab7;
+    color: #fff;
+}
+
+/** 按鈕 */
+#AI3-WebChat .btn_box div {
+    background: #337ab7;
+    color: #fff;
+}
+
+/** 選擇客服群組項目 */
+#AI3-WebChat .service-group-item {
+    background: #aadaff;
+}
+
+/** 選擇客服群組項目 */
+#AI3-WebChat .service-group-item:hover {
+    background: #337ab7;
+    color: #fff;
+}
+
+/** 關注問題項目 */
+#AI3-WebChat .hotTopic-item {
+    background: #aadaff;
+}
+
+/** 關注問題項目 */
+#AI3-WebChat .hotTopic-item:hover {
+    background: #337ab7;
+    color: #fff;
+}
+
+/** openvidu 按鈕 */
+#openvidubtn {
+    color: #337ab7;
+}
+
+#openvidubtn:hover {
+    color: #3db9ea;
+}
+
+/**GPT格式*/
+
+.GptRelated {}
+
+.GptRelated:hover {
+    background-color: rgb(187, 218, 255);
+}
+
+/**GPT格式-滿意度*/
+.ChatMessageGptSatisDislike {
+    background-image: url(../../image/06/ChatMessageGptSatisDislike.svg);
+}
+
+.ChatMessageGptSatisOK {
+    background-image: url(../../image/06/ChatMessageGptSatisOK.svg);
+}
+
+.ChatMessageGptSatisLike {
+    background-image: url(../../image/06/ChatMessageGptSatisLike.svg);
+}
+
+.ChatMessageGptSatisDislike:hover {
+    background-image: url(../../image/06/ChatMessageGptSatisDislike_hover.svg);
+}
+
+.ChatMessageGptSatisOK:hover {
+    background-image: url(../../image/06/ChatMessageGptSatisOK_hover.svg);
+}
+
+.ChatMessageGptSatisLike:hover {
+    background-image: url(../../image/06/ChatMessageGptSatisLike_hover.svg);
+}
+
+.ChatMessageGptSatisDislike_clicked {
+    background-image: url(../../image/06/ChatMessageGptSatisDislike_clicked.svg);
+    float: right;
+}
+
+.ChatMessageGptSatisOK_clicked {
+    background-image: url(../../image/06/ChatMessageGptSatisOK_clicked.svg);
+    float: right;
+}
+
+.ChatMessageGptSatisLike_clicked {
+    background-image: url(../../image/06/ChatMessageGptSatisLike_clicked.svg);
+    float: right;
+}
+
+.card-title-full {
+    color: rgb(51, 122, 182);
+}
+
+.card-title-helf {
+    color: rgb(51, 122, 182);
+}
+
+.fontsize-btn-helf {
+    color: rgb(51, 122, 182);
+    border: 1px solid rgb(51, 122, 182);
+}
+
+.fontsize-btn-full {
+    color: rgb(51, 122, 183);
+    border: 1px solid rgb(51, 122, 183);
+}
+
+.fontsize-btn:hover {
+    background-color: rgb(104, 200, 238);
+}
+
+.fontsize-active {
+    background-color: rgb(104, 200, 238);
+}

@@ -1,0 +1,107 @@
+﻿
+#LeaveWord
+{
+	background-color	: #EFF0F2;
+	border-bottom		: 1px solid #DCDEE4;
+	position			: absolute;
+	top					: 0px;
+	bottom				: 50px;
+	width				: 100%;
+	overflow			: auto;
+	padding				: 6px 10px;
+    display             :none;
+}
+
+
+#LeaveWordClose
+{
+	position			: absolute;
+	top					: 16px;
+	right				: 16px;
+	width				: 16px;
+	height				: 16px;
+	font-family			: Arial;
+	font-size			: 1rem;
+	line-height			: 16px;
+	cursor				: default;
+}
+
+#LeaveWordClose:hover
+{
+	color				: #89CB23;
+}
+
+.agentTip
+{
+    color               : #333;
+}
+
+#messageForm dd label,
+#messageForm dd input,
+#messageForm dd select
+{
+	display: block;
+}
+
+#messageForm dd input,
+#messageForm dd select
+{
+	border: 1px solid #ccc;
+	color: #333;
+	height: 30px;
+	text-indent: 6px;
+}
+
+#messageForm dd 
+{
+    padding             : 5px;
+    margin-left         :5px;
+}
+
+#messageForm dd .inline
+{
+    display            : inline;
+}
+
+#messageForm dd .short
+{
+    width              : 200px;
+}
+
+#messageForm dd .long
+{
+	width              : 100%;
+}
+
+#messageForm dd .genderLabel
+{
+	margin-left        : 30px;
+}
+
+#messageForm dd .radio
+{
+	height             : 16px;
+}
+
+#messageForm dd .radio
+{
+	position           : relative;
+	top                : -2px;
+}
+
+/*#LeaveWordButton 
+{
+    background-color: #E9E9E9;
+    border: 1px solid #CACACA;
+    border-radius: 2px;
+    color: #4A4E52;
+    cursor: pointer;
+    margin-top: 20px;
+    outline: none;
+    width: 90px;    
+}
+
+#LeaveWordButton:hover 
+{
+    background-color: #E0E0E0;
+}*/

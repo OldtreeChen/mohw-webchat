@@ -1,0 +1,7 @@
+# Sensitive / binary files
+*.har
+*.zip
+
+# OS
+.DS_Store
+Thumbs.db

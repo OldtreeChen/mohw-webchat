@@ -1,0 +1,36 @@
+﻿.QuickreplySlide {
+  border: 1px solid #d1d1d1 !important;
+  width: max-content;
+  padding: 5px;
+  height: 40px;
+  border-radius: 50px;
+  margin: 3px 1px;
+}
+
+.QuickReply_div {
+  display: block;
+  float: right;
+  padding: 5px;
+  margin-left: 1px;
+}
+
+.QuickReply_img {
+  display: block;
+  float: left;
+  width: 30px;
+  height: 30px;
+  padding: 1px;
+  border-radius: 60px;
+  background-color: white;
+}
+
+#QuickReply_Container {
+  max-width: 100%;
+  margin-left: 5px !important;
+}
+
+.QuickReply_Vertical {
+  display: flex;
+  flex-wrap: wrap;
+  height: 100%;
+}

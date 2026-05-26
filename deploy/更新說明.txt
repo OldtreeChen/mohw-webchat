@@ -1,0 +1,129 @@
+=======================================
+  衛福部 WebChat 更新說明
+  更新日期：2026-05-18
+=======================================
+
+本次更新包含兩個功能：
+  A. 載入招呼畫面（Loading）
+  B. 虛擬人等待過渡語（IdleResponse）
+
+
+========================================
+  A. 載入招呼畫面
+========================================
+
+【功能說明】
+新增載入中招呼畫面，避免頁面初始載入時出現空白。
+當虛擬人（HeyGen Avatar）載入完成後，自動淡出切換至虛擬人畫面。
+
+【相關檔案】
+1. styles/Loading.css   — 載入畫面樣式
+2. common/Loading.js    — 載入畫面邏輯
+
+
+========================================
+  B. 虛擬人等待過渡語
+========================================
+
+【功能說明】
+當使用者送出訊息後，若虛擬人超過 5 秒仍未開始回應，
+虛擬人會先播一句隨機的過渡語（如「請稍等一下，我正在為您查詢。」），
+避免長時間沉默，提升使用體驗。
+
+過渡語句池（隨機挑選其中一句）：
+  - 請稍等一下，我正在為您查詢。
+  - 我正在整理相關資訊，請您稍候。
+  - 好的，請給我一點時間查找資料。
+  - 收到您的問題了，讓我查一下。
+  - 請稍候，我馬上為您處理。
+
+【相關檔案】
+3. common/IdleResponse.js — 等待過渡語邏輯
+
+【可調參數】（修改 IdleResponse.js 檔案開頭）
+  - IDLE_SECONDS = 5      → 幾秒未回應就觸發（預設 5 秒）
+  - COOLDOWN_MS  = 10000  → 過渡語最短間隔，避免重複播放（預設 10 秒）
+  - FILLER_PHRASES 陣列   → 可自行增減過渡語句
+
+
+========================================
+  檔案放置目錄
+========================================
+
+將檔案放入 WebChat 網站根目錄下對應資料夾：
+
+  /webchat/
+  ├── index.html
+  ├── styles/
+  │   ├── WebChat.css         （既有，不修改）
+  │   └── Loading.css         ← 新增
+  └── common/
+      ├── WebChat.js          （既有，不修改）
+      ├── Avatar.js           （既有，不修改）
+      ├── Loading.js          ← 新增
+      └── IdleResponse.js     ← 新增
+
+
+========================================
+  index.html 修改方式
+========================================
+
+需在 index.html 中加入以下引用（不修改其他既有程式碼）：
+
+  步驟 1：在 <head> 區塊內，既有的 CSS 引用之後，加入：
+
+    <link rel="stylesheet" type="text/css" href="styles/Loading.css" />
+
+  步驟 2：在 <div id="loading"> 標籤之後（</div> 結尾之後），加入：
+
+    <script src="common/Loading.js"></script>
+    <script src="common/IdleResponse.js"></script>
+
+  範例位置參考：
+
+    <head>
+      ...
+      <link rel="stylesheet" type="text/css" href="styles/WebChat.css" />
+      <link rel="stylesheet" type="text/css" href="styles/Loading.css" />      ← 加在這裡
+      ...
+    </head>
+    <body>
+      ...
+      <div id="loading">...</div>
+      <script src="common/Loading.js"></script>                                 ← 加在這裡
+      <script src="common/IdleResponse.js"></script>                            ← 加在這裡
+      ...
+    </body>
+
+
+========================================
+  運作原理
+========================================
+
+Loading（載入畫面）：
+  1. Loading.css 讓 #loading 元素以全螢幕置中方式顯示品牌載入畫面
+  2. Loading.js 將 #loading 內容替換為品牌化的載入動畫
+  3. 攔截原本的 $("#loading").remove()，防止載入畫面過早消失
+  4. 透過 MutationObserver 監聽 #ai-loading-overlay 的樣式變化
+  5. 當虛擬人載入完成（overlay 被隱藏），自動淡出載入畫面
+  6. 安全機制：最多等待 30 秒後強制退出載入畫面
+
+IdleResponse（等待過渡語）：
+  1. 攔截 window.fetch，偵測送出訊息的 API 呼叫（message/send）
+  2. 偵測到後啟動 5 秒倒數計時器
+  3. 同時監聽 MessageList 的 DOM 變化，偵測機器人回覆訊息
+  4. 若 5 秒內收到回覆 → 取消計時器（正常流程）
+  5. 若 5 秒內未收到回覆 → 虛擬人播放一句隨機過渡語
+  6. 過渡語有 10 秒冷卻時間，避免連續播放
+
+
+========================================
+  注意事項
+========================================
+
+- 不需修改任何既有的 JS/CSS 檔案
+- Loading.js 必須放在 <div id="loading"> 之後，確保 DOM 元素已存在
+- Loading.css 建議放在 <head> 中，確保載入畫面第一時間有樣式
+- IdleResponse.js 可放在 Loading.js 之後，位置不嚴格要求
+- 如需自訂載入畫面標題，Loading.js 會自動讀取 #nvbarTitle 的內容
+- 如需調整等待秒數或過渡語內容，修改 IdleResponse.js 檔案開頭的參數

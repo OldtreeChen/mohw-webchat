@@ -1,0 +1,86 @@
+/* 載入招呼畫面樣式 */
+#loading {
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    width: 100vw !important;
+    height: 100vh !important;
+    z-index: 9999;
+    position: fixed !important;
+    top: 0;
+    left: 0;
+    background: linear-gradient(135deg, #e8f4f8 0%, #ffffff 50%, #f0f9ff 100%) !important;
+    opacity: 1 !important;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Microsoft JhengHei", sans-serif;
+}
+
+#loading .loading-content {
+    text-align: center;
+    padding: 2rem;
+}
+
+#loading .loading-icon {
+    margin-bottom: 1.5rem;
+}
+
+#loading .loading-icon svg {
+    width: 72px;
+    height: 72px;
+    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.1));
+}
+
+#loading .loading-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #1a5276;
+    margin: 0 0 0.4rem 0;
+    letter-spacing: 0.05em;
+}
+
+#loading .loading-subtitle {
+    font-size: 0.9rem;
+    color: #5d6d7e;
+    margin: 0 0 2rem 0;
+}
+
+#loading .loading-spinner {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-bottom: 1.2rem;
+}
+
+#loading .spinner-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: #2e86c1;
+    animation: dotBounce 1.4s infinite ease-in-out both;
+}
+
+#loading .spinner-dot:nth-child(1) { animation-delay: -0.32s; }
+#loading .spinner-dot:nth-child(2) { animation-delay: -0.16s; }
+#loading .spinner-dot:nth-child(3) { animation-delay: 0s; }
+
+@keyframes dotBounce {
+    0%, 80%, 100% {
+        transform: scale(0.6);
+        opacity: 0.4;
+    }
+    40% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+#loading .loading-text {
+    font-size: 0.85rem;
+    color: #7f8c8d;
+    margin: 0;
+}
+
+#loading.fade-out {
+    opacity: 0 !important;
+    transition: opacity 0.4s ease-in;
+}
+

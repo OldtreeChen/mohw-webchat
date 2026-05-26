@@ -1,0 +1,1426 @@
+﻿"<!DOCTYPE html>
+<html lang="zh-TW">
+
+<head>
+    <title>WebChat</title>
+    <meta http-equiv="cache-control" content="no-cache">
+    <meta http-equiv="expires" content="0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=0" />
+    <link rel="icon" href="./image/favicon.ico" type="image/x-icon" />
+
+    <script src="./lib/jquery.min.js"></script>
+    <script src="./lib/jquery-ui/jquery-ui.min.js"></script>
+    <script src="./lib/jquery.fileupload.min.js"></script>
+    <script src="./lib/Bootstrap/js/bootstrap.min.js"></script>
+    <script src="./lib/jocket.js"></script>
+    <script src="./lib/swiper/swiper-bundle.min.js"></script>
+    <script src="./lib/purify.min.js"></script>
+    <script src="./lib/localforage.min.js"></script>
+    
+    <!-- HeyGen AI3-STTS 相關檔案 -->
+    <script src="https://cdn.socket.io/4.7.4/socket.io.min.js"></script>
+    <script src="https://unpkg.com/livekit-client@1.15.13/dist/livekit-client.umd.js"></script>
+    <script src="./common/test-config.js"></script>
+    <script>
+        window.events$1 = {
+            EventEmitter: class EventEmitter {
+                constructor() { this._e = {}; }
+                on(e, f) { (this._e[e] = this._e[e] || []).push(f); return this; }
+                off(e, f) { const l = this._e[e]; if (l) this._e[e] = l.filter(x => x !== f); return this; }
+                emit(e, ...a) { (this._e[e] || []).forEach(f => f(...a)); return this; }
+                once(e, f) { const w = (...a) => { this.off(e, w); f(...a); }; return this.on(e, w); }
+                removeAllListeners(e) { if (e) delete this._e[e]; else this._e = {}; return this; }
+                addListener(e, f) { return this.on(e, f); }
+                removeListener(e, f) { return this.off(e, f); }
+                listenerCount(e) { return (this._e[e] || []).length; }
+            }
+        };
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/@heygen/liveavatar-web-sdk/dist/index.umd.js"></script>
+    <script src="./common/ai3-stts.js"></script>
+    <script src="./common/Avatar.js"></script>
+    <script src="./common/AzureWebSTT.js"></script>
+
+    <!-- <script src="./lib/webcall/WebCall.js"></script> -->
+    <script type="text/javascript" src="./common/OpenVidu.js"></script>
+    <script type="text/javascript" src="./common/WebCallStart.js"></script>
+    <script type="text/javascript" src="./common/Util.js"></script>
+    <script type="text/javascript" src="./common/Config.js"></script>
+    <script type="text/javascript" src="./common/Constant.js"></script>
+    <script type="text/javascript" src="./common/File.js"></script>
+    <script type="text/javascript" src="./common/AnswerDisplay.js"></script>
+    <script type="text/javascript" src="./common/Monitor.js"></script>
+    <script type="text/javascript" src="./common/WebChat.js?201904191045"></script>
+    <script type="text/javascript" src="./common/RichMenu.js"></script>
+    <script type="text/javascript" src="./common/LeaveWord.js"></script>
+    <script type="text/javascript" src="./common/ServiceGroupSelect.js"></script>
+    <script type="text/javascript" src="./common/Survey.js"></script>
+    <script type="text/javascript" src="./common/Satisfy.js"></script>
+    <script type="text/javascript" src="./common/LinkAction.js"></script>
+    <script type="text/javascript" src="./common/Emojitable.js"></script>
+    <script type="text/javascript" src="./common/EmojiUtil.js"></script>
+    <script type="text/javascript" src="./common/HotTopic.js"></script>
+    <script type="text/javascript" src="./common/Stickertable.js"></script>
+    <script type="text/javascript" src="./common/Auth.js"></script>
+    <script type="text/javascript" src="./common/Contact.js"></script>
+    <script type="text/javascript" src="./common/QuickReply.js"></script>
+    <script type="text/javascript" src="./common/ContactApi.js"></script>
+    <script type="text/javascript" src="./common/Random.js"></script>
+    <script type="text/javascript" src="./common/WebChatInner.js"></script>
+    <script type="text/javascript" src="./common/WebSpeechRecognition.js"></script>
+    <script type="text/javascript" src="./common/WebSpeechSynthesis.js"></script>
+    <script type="text/javascript" src="./common/WebChatActivity.js"></script>
+    <link rel="stylesheet" type="text/css" href="./lib/Bootstrap/css/bootstrap.css" />
+    <link rel="stylesheet" type="text/css" href="./lib/jquery-ui/jquery-ui.min.css" />
+    <link rel="stylesheet" type="text/css" href="./lib/swiper/swiper-bundle.min.css" />
+    <link rel="stylesheet" type="text/css" href="./styles/WebChat.css" />
+    <link rel="stylesheet" type="text/css" href="./styles/LeaveWord.css" />
+    <link rel="stylesheet" type="text/css" href="./styles/ServiceGroupSelect.css" />
+    <link rel="stylesheet" type="text/css" href="./styles/Survey.css" />
+    <link rel="stylesheet" type="text/css" href="./styles/Satisfy.css" />
+    <link rel="stylesheet" type="text/css" href="./styles/Emojitable.css" />
+    <link rel="stylesheet" type="text/css" href="./styles/Stickertable.css" />
+    <link rel="stylesheet" type="text/css" href="./styles/HotTopic.css" />
+    <link rel="stylesheet" type="text/css" href="./styles/Contact.css" />
+    <link rel="stylesheet" type="text/css" href="./styles/modal.css" />
+    <link rel="stylesheet" type="text/css" href="./styles/QuickReply.css" />
+    <style>
+        /* Scroll Bar Style*/
+        ::-webkit-scrollbar {
+            width: 5px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #888;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
+
+        /* 確保頁面有高度 */
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* 載入招呼畫面 */
+        #loading {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100vw;
+            height: 100vh;
+            z-index: 9999;
+            position: fixed;
+            top: 0;
+            left: 0;
+            background: linear-gradient(135deg, #e8f4f8 0%, #ffffff 50%, #f0f9ff 100%);
+            animation: loadingFadeIn 0.3s ease-out;
+        }
+
+        @keyframes loadingFadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        #loading .loading-content {
+            text-align: center;
+            padding: 2rem;
+        }
+
+        #loading .loading-logo {
+            margin-bottom: 1.5rem;
+        }
+
+        #loading .loading-logo img {
+            width: 80px;
+            height: 80px;
+            object-fit: contain;
+            border-radius: 16px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        #loading .loading-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #1a5276;
+            margin: 0 0 0.5rem 0;
+            letter-spacing: 0.05em;
+        }
+
+        #loading .loading-subtitle {
+            font-size: 0.95rem;
+            color: #5d6d7e;
+            margin: 0 0 2rem 0;
+        }
+
+        #loading .loading-spinner {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin-bottom: 1rem;
+        }
+
+        #loading .spinner-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background-color: #2e86c1;
+            animation: dotBounce 1.4s infinite ease-in-out both;
+        }
+
+        #loading .spinner-dot:nth-child(1) { animation-delay: -0.32s; }
+        #loading .spinner-dot:nth-child(2) { animation-delay: -0.16s; }
+        #loading .spinner-dot:nth-child(3) { animation-delay: 0s; }
+
+        @keyframes dotBounce {
+            0%, 80%, 100% {
+                transform: scale(0.6);
+                opacity: 0.4;
+            }
+            40% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        #loading .loading-text {
+            font-size: 0.9rem;
+            color: #7f8c8d;
+            margin: 0;
+        }
+
+        #loading.fade-out {
+            animation: loadingFadeOut 0.4s ease-in forwards;
+        }
+
+        @keyframes loadingFadeOut {
+            from { opacity: 1; }
+            to { opacity: 0; }
+        }
+    </style>
+</head>
+
+<body id="AI3-WebChat" class="I18Content">
+    <div id="disConnectOverlay"></div>
+    <div id="loading">
+        <div class="loading-content">
+            <div class="loading-logo">
+                <img src="./image/logo.png" alt="長照AI助理" onerror="this.style.display='none'">
+            </div>
+            <h2 class="loading-title">長照AI智慧助理</h2>
+            <p class="loading-subtitle">衛生福利部</p>
+            <div class="loading-spinner">
+                <div class="spinner-dot"></div>
+                <div class="spinner-dot"></div>
+                <div class="spinner-dot"></div>
+            </div>
+            <p class="loading-text">系統載入中，請稍候...</p>
+        </div>
+    </div>
+    <div id="LeftZone">
+        <!-- Navbar -->
+        <div id="left-header" class="navbar container flexAlignCenter bg-color" draggable="true">
+            <div class="col-xs-8 col-md-9 flexAlignCenter " id="header-info-div" style="padding-right:0">
+                <div id="logo" class="chat-logo" style="display: none;">
+                    <img id="logoImage" alt="logo" onerror="this.src='image/logo.png'">
+                </div>
+                <h1 class="navbar-brand font-color"><span id="nvbarTitle"></span></h1>
+                <a accesskey="U" class="accesskey_U" href="#" title="上方區域" data-i18n="[title]WebChatTop">:::</a>
+            </div>
+            <div class="flexAlignCenter" id="header-btn-div">
+                <div class="fontsize-menu-helf">
+                    <div type="button" tabindex="0" id="fontsize-menu" aria-expanded="false" title="字體大小" data-i18n="[title]FontSize"
+                        onclick="WebChat.switchFontSize();" onkeypress="WebChat.switchFontSize();">
+                    </div>
+                </div>
+                <span>
+                    <div type="button" tabindex="0" id="language-menu" role="menu" class="dropdown-toggle   icon-color"
+                        style="display: none;"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"  title="介面語系" data-i18n="[title]UiLanguage">
+                        <span id="LanguageMenuButton" tabindex="0" class="LanguageMenuButton font-color bg-color menu-close"></span>
+                    </div>
+                    <ul class="dropdown-menu language-container" aria-labelledby="languageDropdown">
+                        <li id="i18n_zh_tw">
+                            <div class="flex">
+                                <div id="flag-icon-tc" tabindex="0" type="button" class="flex-start  icon-color"></div>
+                                <span id="Zh_tw_Button" class="flex-end" tabindex="0">
+                                </span>
+                            </div>
+                            <ol role="separator" class="divider"></ol>
+                        </li>
+                        <li id="i18n_en_us">
+                            <div class="flex">
+                                <div id="flag-icon-en" tabindex="0" class="flex-start  icon-color">
+                                </div>
+                                <span id="En_us_Button" class="flex-end" tabindex="0">
+                                </span>
+                            </div>
+                            <ol role="separator" class="divider"></ol>
+                        </li>
+                        <li id="i18n_ja_jp">
+                            <div class="flex">
+                                <div id="flag-icon-jp" tabindex="0" class="flex-start icon-color">
+                                </div>
+                                <span id="Ja_jp_Button" class="flex-end" tabindex="0">
+                                </span>
+                            </div>
+                            <ol role="separator" class="divider"></ol>
+                        </li>
+                        <li id="i18n_zh_cn">
+                            <div class="flex">
+                                <div id="flag-icon-sc" tabindex="0" class="flex-start icon-color">
+                                </div>
+                                <span id="Zh_cn_Button" class="flex-end" tabindex="0">
+                                </span>
+                            </div>
+                            <ol role="separator" class="divider"></ol>
+                        </li>
+                    </ul>
+                </span>
+                <img id="header-user-avatar" alt="使用者頭像" style="display: none;" data-i18n="[alt]UserPhoto">
+                <div id="webmakecallbtn" class="glyphicon glyphicon-earphone" style="display: none;">
+                </div>
+                <div id="openvidubtn" class="glyphicon glyphicon-facetime-video" style="display: none;">
+                </div>
+                <div type="button" tabindex="0" class="LoginButton icon-color" data-toggle="modal" id="LoginButton"
+                    style="display: none;">
+                </div>
+                <div type="button" tabindex="0" id="hamburger-menu" role="menu" class="dropdown-toggle   icon-color"
+                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" title="功能選單"
+                    data-i18n="[title]ListItem" style="display: none;">
+                </div>
+                <ul id="dropdown-menu" class="dropdown-menu pull-right">
+                    <li id="MemberServiceListItem">
+                        <span id="MemberServiceButton" tabindex="0"></span>
+                        <ol role="separator" class="divider"></ol>
+                    </li>
+                    <li id="SurveyListItem">
+                        <span id="SurveyButton" tabindex="0"></span>
+                        <ol role="separator" class="divider"></ol>
+                    </li>
+                    <li id="AttentionListItem">
+                        <span id="AttentionButton" tabindex="0"></span>
+                        <ol role="separator" class="divider"></ol>
+                    </li>
+                    <li id="HotQuestionListItem">
+                        <span id="HotQuestionButton" tabindex="0"></span>
+                        <ol role="separator" class="divider"></ol>
+                    </li>
+                    <li id="HelpListItem">
+                        <span id="HelpButton" tabindex="0"></span>
+                        <ol role="separator" class="divider"></ol>
+                    </li>
+                    <li id="VersionListItem">
+                        <span id="VersionButton" tabindex="0"></span>
+                        <ol role="separator" class="divider"></ol>
+                    </li>
+                    <li id="StopChatListItem">
+                        <span id="StopChatButton" tabindex="0"></span>
+                        <ol role="separator" class="divider"></ol>
+                    </li>
+                </ul>
+                <div id="ExitButton" tabindex="0" title="關閉" class="leave-chat icon-color"
+                    data-i18n="[title]WebChatClose"></div>
+
+            </div>
+        </div>
+
+        <!-- webcall area  -->
+        <div id=WebCallStatus class="webcallbox" style="display: none;">
+            <div class="container">
+                <div class="webcallAi3icon">
+                    <img src="./image/web-site.png" alt="LOGO">
+                </div>
+                <div id="webcallName" class="webcallagentName"></div>
+                <div id="webcallTime" class="webcallTime" data-i18n="[html]WebcallTime">呼叫中...</div>
+                <button id="webcallCancel" class="webcallphone" data-i18n="[title]WebcallCancel" title="WebCall 取消按鈕">
+                    <img src="./image/webcall/phone-slash-solid.svg" data-i18n="[alt]WebcallCancel" alt="WebCall 取消按鈕"
+                        style="height: 20px;">
+                </button>
+                <span class="glyphicon glyphicon-earphone webcallCancelPhone"></span>
+            </div>
+        </div>
+        <div id="ChatZone-Container">
+            <!-- Chat area -->
+            <div id="ChatZone">
+                <!-- <a accesskey="C" href="#" data-i18n="[title]WebcallCancel" title="中間區域">:::</a> -->
+                <!-- 可拖曳的調整 bar -->
+                <!-- HeyGen Half Mode -->
+                <div id="LeftZone-HeyGen-Half" class="heygen-zone heygen-half-mode" style="display: none;">
+                </div>
+                <div id="ResizeBar" class="resize-bar" title="拖曳調整視窗大小">
+                    <div class="resize-handle"></div>
+                </div>
+                <div id="MessageList">
+                </div>
+                <div id="ToolZone" style="display:none;">
+                    <div id=QuickReply_Container class='swiper'>
+                        <div class='swiper-wrapper cardsWrapper' id=QuickReply>
+                        </div>
+                    </div>
+                </div>
+                <div class="divHorizontalCenter" style="width: 100%;">
+                    <div class="RichMenuPannel" tabindex="0" data-i18n="[aria-label]RichMenuPannel" aria-label="RichMenu 選單">
+                        <img id=RichMenuImg src="" usemap="#RichMenuMap" alt="RichMenu" style="width:100%;">
+                    </div>
+                    </div>
+                <!-- <a accesskey="L" href="#" title="下方區域" aria-label="下方區域"
+                                                                                                                                                                                                                                                                                                                                        data-i18n="[title]WebChatUnder; [aria-label]WebChatUnder">:::</a> -->
+                <div class="RichMenuZone bg-color">
+                    <div id=ChangeEditorButton class="Button IconButton icon-color" style="margin-top: 8px;" tabindex="0"
+                        title="切換工具列按鈕" aria-label="切換工具列按鈕" data-i18n="[title]WebChatToolbar; [aria-label]WebChatToolbar">
+                    </div>
+                    <span id=RichMenuButton tabindex="0" class="richMenuButton font-color bg-color menu-open" title="RichMenu 開關"
+                        aria-label="RichMenu 開關" data-i18n="[title]RichMenuButton; [aria-label]RichMenuButton"></span>
+                    </div>
+                    
+                    <div id="EditorZone" class="EditorZone bg-color">
+                        <div id="ButtonZone">
+                            <span id="ChangeRichMenuButton" class="Button IconButton icon-color " title="RichMenu 切換"
+                                aria-label="切換至RichMenu" data-i18n="[title]RichMenuButton; [aria-label]RichMenuButton"> </span>
+                        <span id="ApplyAgentButton" class="Button IconButton icon-color ButtonDisabled" title="轉接真人" aria-label="轉接真人"
+                            data-i18n="[title]ApplyAgentButton; [aria-label]ApplyAgentButton"></span>
+                        <span type="button" id="ImageButton" class="Button IconButton icon-color ButtonDisabled" title="上傳圖片" aria-label="上傳圖片"
+                            data-i18n="[title]UploadPictuer; [aria-label]UploadPictuer"></span>
+                        <span type="button" id="AttachmentButton" class="Button IconButton icon-color ButtonDisabled" title="上傳檔案"
+                            aria-label="上傳檔案" data-i18n="[title]UploadFile; [aria-label]UploadFile"></span>
+                        <span type="button" id="EmojiButton" class="Button IconButton icon-color ButtonDisabled" title="表情貼圖" aria-label="表情貼圖"
+                            data-i18n="[title]Emoji; [aria-label]Emoji"></span>
+                        </div>
+                        <span id="audio-wave" class="Button IconButton _hide" tabindex="0" aria-label="音浪圖示" title="音浪"
+                            data-i18n="[title]SoundWaves; [aria-label]SoundWavesIcon"></span>
+                    <!-- <label for="Editor"></label> -->
+                    <input id="EditorBlock" title="EditorBlock" type="password" style="display: none;">
+                    <textarea id="Editor" type="text" title="對話輸入框" aria-label="對話輸入框"
+                        data-i18n="[title]DialogBox; [aria-label]DialogBox"></textarea>
+                    <div class="button-col">
+                        <span id="SpeechToTextEndBtn" class="Button IconButton icon-color _hide" tabindex="0" aria-label="語音輸入結束"
+                            title="語音輸入結束" data-i18n="[title]SpeechToTextEnd; [aria-label]SpeechToTextEnd"></span>
+                        <span id="DefaultStartTTSBtn" class="Button IconButton icon-color _hide" tabindex="0" aria-label="預設開啟播音"
+                            title="預設開啟播音" data-i18n="[title]DefaultStartTTS; [aria-label]DefaultStartTTS"></span>
+                        <span id="DefaultCloseTTSBtn" class="Button IconButton icon-color _hide" tabindex="0" aria-label="預設關閉播音"
+                            title="預設關閉播音" data-i18n="[title]DefaultCloseTTS; [aria-label]DefaultCloseTTS"></span>
+                        <span id="SpeechToTextBtn" class="Button IconButton icon-color _hide" tabindex="0" aria-label="語音輸入" title="語音輸入"
+                            data-i18n="[title]SpeechToText; [aria-label]SpeechToText"></span>
+                        <span id="SendButton" class="Button IconButton icon-color active" tabindex="0" aria-label="送出訊息" title="送出"
+                            data-i18n="[title]Send; [aria-label]SendMessage"></span>
+                        </div>
+                </div>
+                <div id="RestartChatButton" class="EditorZone bg-color" tabindex="0" title="重啟交談按鈕" aria-label="重啟交談按鈕"
+                    data-i18n="[title]RestartChatBtn; [aria-label]RestartChatBtn; [html]RestartChat">
+                    重啟交談</div>
+            </div>
+            <!-- HeyGen Full Mode -->
+            <div id="LeftZone-HeyGen-Full" class="heygen-zone heygen-full-mode" style="display: none;">
+            </div>
+            
+            <!-- HeyGen 共用內容容器（會動態插入到對應的 zone 中） -->
+            <div id="heygen-shared-content" style="display: none;">
+                <div id="ai-loading-overlay">
+                    <div style="text-align: center;color: #333;">
+                        <div class="overlay-content"></div>
+                    </div>
+                </div>
+                <div class="heygen-container" id="heygen-player" style="position: relative; width: 100%; height: 100%;">
+                    <!-- LiveKit Video 元素 -->
+                    <video id="heygen-video" autoplay playsinline controls="false"
+                        style="width: 100%; height: 100%; object-fit: cover; border-radius: 10px; display: none;"></video>
+            
+                    <!-- 音頻元素（如果需要單獨處理音頻） -->
+                    <audio id="heygen-audio" autoplay style="display: none;"></audio>
+                    <!-- 右下角控制按鈕 -->
+                    <div id="heygen-controls">
+                        <div class="heygen-control-top">
+                        </div>
+                        <div class="heygen-control-bottom">
+                            <button id="toggle-chatzone-btn" class="heygen-control-btn heygen-control-btn-chatzone active"
+                                title="切換聊天區域"></button>
+                            <button id="toggle-mic-btn" class="heygen-control-btn heygen-control-btn-mic" title="麥克風開關"></button>
+                            <!-- 聲音提醒訊息 -->
+                            <div id="sound-reminder" class="sound-reminder-tooltip" style="display: none;">
+                                <div class="sound-reminder-content">
+                                    點擊開啟聲音
+                                    <div class="sound-reminder-arrow"></div>
+                                </div>
+                            </div>
+                            <button id="toggle-avatar-mute-btn" class="heygen-control-btn heygen-control-btn-voice"
+                                title="虛擬人靜音開關"></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Right Page -->
+    <div id="RightZone">
+        <div class="dynamic_tab bg-color" tabindex="0" aria-label="會員工具列" data-i18n="[aria-label]MemberToolbar">
+            <div class="member" tabindex="0" aria-label="個人資訊按鈕" data-i18n="[aria-label]PersonalInformationBtn">
+                <div class="dynamic_tab_icon icon-color"></div>
+                <div class="dynamic_tab_title font-color" data-i18n="[html]PersonalInformation">個人資訊</div>
+            </div>
+            <div class="addservicerecord" tabindex="0" aria-label="新增服務紀錄按鈕"
+                data-i18n="[aria-label]AddServiceRecordBtn">
+                <div class="dynamic_tab_icon icon-color"></div>
+                <div class="dynamic_tab_title font-color" data-i18n="[html]AddServiceRecord">新增服務紀錄</div>
+            </div>
+            <div class="servicerecord active" tabindex="0" aria-label="服務紀錄按鈕" data-i18n="[aria-label]ServiceRecordBtn">
+                <div class="dynamic_tab_icon icon-color"></div>
+                <div class="dynamic_tab_title font-color" data-i18n="[html]ServiceRecord">服務紀錄</div>
+            </div>
+        </div>
+        <div class="dynamic_cont">
+            <div id="memberCont" class="member" tabindex="0" aria-label="個人資訊區域" data-i18n="[aria-label]MemberCont">
+            </div>
+            <div id="addservicerecordCont" class="addservicerecord" tabindex="0" aria-label="新增服務紀錄區域"
+                data-i18n="[aria-label]AddServiceRecordCont"></div>
+            <div id="servicerecordCont" class="servicerecord active" tabindex="0" aria-label="服務紀錄區域"
+                data-i18n="[aria-label]ServiceRecordCont"></div>
+        </div>
+    </div>
+    <div id="dvP4Page" tabindex="0">
+        <iframe id="ifP4Url" tabindex="0" title="WebView網頁" data-i18n="[title]ifP4Url"></iframe>
+        <div id="btnP4PageMinimum" tabindex="0" aria-label="最小" title="最小" data-i18n="[aria-label]Least; [title]Least">
+            <img alt="關閉圖片" src="./image/iframe-minimum.png" data-i18n="[alt]CloseImage"></img>
+        </div>
+        <div id="btnP4PageZoomIn" tabindex="0" aria-label="放大" title="放大"
+            data-i18n="[aria-label]Enlarge; [title]Enlarge" style="display:none">
+            <img alt="關閉圖片" src="./image/iframe-zoom-in.png" data-i18n="[alt]CloseImage"></img>
+        </div>
+        <div id="btnP4PageClose" tabindex="0" aria-label="關閉WebView視窗按鈕" title="關閉"
+            data-i18n="[aria-label]btnP4PageClose; [title]Close">
+            <img alt="關閉圖片" src="./image/iframe-close.svg" data-i18n="[alt]CloseImage"></img>
+        </div>
+    </div>
+
+    <!--Sign Dialog-->
+    <div id="signModal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static">
+        <div class="modal-dialog modal-dialog_cust">
+            <div class="modal-content">
+                <div class="modal-header  ">
+                    <button type="button" class="close modal-font-color" data-dismiss="modal" tabindex="0"
+                        title="關閉註冊帳號視窗" aria-label="關閉註冊帳號視窗"
+                        data-i18n="[aria-label]CloseAccountRegistrationWindow; [title]CloseAccountRegistrationWindow">×</button>
+                    <div class="modal-title modal-font-color" tabindex="0" aria-label="註冊帳號視窗"
+                        data-i18n="[aria-label]RegisterAccountWindow; [html]RegisterAccount">註冊帳號</div>
+                </div>
+                <div class="modal-body" id="signModalBody">
+                    <div class="inputcolumn">
+                        <label for="sign_phonenum"></label>
+                        <input type="text" id="sign_phonenum" placeholder="請輸入手機號碼" tabindex="0" title="手機號碼輸入框"
+                            aria-label="手機號碼輸入框"
+                            data-i18n="[placeholder]CellphoneNumber; [title]CellphoneNumberBox; [aria-label]CellphoneNumberBox" />
+                    </div>
+                    <input type="checkbox" id="sign_agree" name="sign_phone" value="agree" tabindex="0"
+                        title="同意本公司客戶隱私權政策與客戶服務條款" aria-label="同意本公司客戶隱私權政策與客戶服務條款"
+                        data-i18n="[title]SignAgreeCompany; [aria-label]SignAgreeCompany">
+                    <label class="mt10 w94" for="sign_agree" data-i18n="[html]SignAgree">我同意本公司客戶隱私權政策與客戶服務條款</label>
+                    <button class="btn fullwidthBtn" id="OTP_SendBtn" tabindex="0" aria-label="下一步"
+                        data-i18n="[aria-label]NextStep; [html]NextStep">下一步</button>
+                    <div class="warning"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--OTP Dialog-->
+    <div id="OTPModal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static">
+        <div class="modal-dialog modal-dialog_cust">
+            <div class="modal-content">
+                <div class="modal-header  ">
+                    <button type="button" class="close modal-font-color" data-dismiss="modal" title="關閉驗證手機號碼視窗"
+                        aria-label="關閉驗證手機號碼視窗"
+                        data-i18n="[title]CloseVerifyPhoneNumber; [aria-label]CloseVerifyPhoneNumber">×</button>
+                    <div class="modal-title modal-font-color" aria-label="驗證手機號碼視窗"
+                        data-i18n="[aria-label]VerifyPhoneNumberWindow; [html]VerifyPhoneNumber">驗證手機號碼</div>
+                </div>
+                <div class="modal-body" id="OTPModalBody">
+                    <img src="./image/otp.png" id="otp-image" alt="OTP 示意圖" data-i18n="[alt]OTPModalBody">
+                    <div id="OTP_phone"> </div>
+                    <div>
+                        <span id="OTP_timeCountdown" tabindex="0" aria-label="我們已經向您發送驗證碼，接收大約需要50秒"
+                            data-i18n="[aria-label]OTPTimeCountdown; [html]OTPTimeCountdown">我們已經向您發送驗證碼，接收大約需要50秒</span>
+                    </div>
+                    <div class="inputcolumn">
+                        <label for="OTP_number"></label>
+                        <input type="text" id="OTP_number" placeholder="請輸入收到的驗證碼" title="驗證碼輸入框" aria-label="驗證碼輸入框"
+                            data-i18n="[placeholder]OTPNumberBox; [title]OTPNumber; [aria-label]OTPNumber" />
+                    </div>
+                    <div class="warning"></div>
+                    <button class="btn fullwidthBtn" id="OTP_VerifyBtn" aria-label="下一步"
+                        data-i18n="[aria-label]NextStep; [html]NextStep">下一步</button>
+                    <div style="display: flex;justify-content: space-between;">
+                        <button class="btn OTP_modifyPhone" style="width:50%; margin-right: 0.4rem;"
+                            id="OTP_modifyPhone" aria-label="返回"
+                            data-i18n="[aria-label]Return; [html]Return">返回</button>
+                        <button class="btn otp-send" style="width:50%; margin-left: 0.4rem;" disabled aria-label="重新發送"
+                            data-i18n="[aria-label]Resend; [html]Resend">重新發送</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--Setting Dialog-->
+    <div id="SettingModal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static">
+        <div class="modal-dialog modal-dialog_cust">
+            <div class="modal-content">
+                <div class="modal-header  ">
+                    <button class="close modal-font-color" data-dismiss="modal" title="關閉設置暱稱及密碼視窗"
+                        aria-label="關閉設置暱稱及密碼視窗"
+                        data-i18n="[title]CloseSettingNameAndPassword; [aria-label]CloseSettingNameAndPassword">×</button>
+                    <div class="modal-title modal-font-color" tabindex="0" aria-label="設置暱稱及密碼視窗"
+                        data-i18n="[aria-label]SetNameAndPassword; [html]SetNameAndPassword">設置暱稱及密碼</div>
+                </div>
+                <div class="modal-body" id="SettingModalBody">
+                    <p tabindex="0" aria-label="加油，再一步就完成註冊了" data-i18n="[aria-label]SettingModal; [html]SettingModal">
+                        加油，再一步就完成註冊了！</p>
+                    <label class="form-control-label" for="nickname" data-i18n="[html]NickName">暱稱</label>
+                    <input type="text" id="nickname" class="form-control " placeholder="請輸入暱稱" title="暱稱輸入框"
+                        aria-label="暱稱輸入框"
+                        data-i18n="[placeholder]InputNickName; [title]NickNameBox; [aria-label]NickNameBox" />
+                    <br>
+                    <label class="form-control-label" for="setPasswd" data-i18n="[html]PasswordLabel">密碼</label>
+                    <input type="password" id="setPasswd" class="form-control " placeholder="請輸入密碼" title="密碼輸入框"
+                        aria-label="密碼輸入框"
+                        data-i18n="[placeholder]Required_Pd; [title]PasswordBox; [aria-label]PasswordBox" />
+                    <br>
+                    <label class="form-control-label" for="setPasswd2" data-i18n="[html]PasswordCheck">密碼確認</label>
+                    <input type="password" id="setPasswd2" class="form-control " placeholder="請再輸入一次" title="密碼確認輸入框"
+                        aria-label="密碼確認輸入框"
+                        data-i18n="[placeholder]EnterAgain; [title]PasswordCheckInputBox; [aria-label]PasswordCheckInputBox" />
+                    <br>
+                    <button class="btn fullwidthBtn sign-complete" id="SignComplete" aria-label="完成註冊"
+                        data-i18n="[aria-label]CompleteRegistration; [html]CompleteRegistration">完成註冊</button>
+                    <div class="warning"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--SettingPwd Dialog-->
+    <div id="set-pwd-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static">
+        <div class="modal-dialog modal-dialog_cust">
+            <div class="modal-content">
+                <div class="modal-header  ">
+                    <button type="button" class="close modal-font-color" data-dismiss="modal" title="關閉重設密碼視窗"
+                        aria-label="關閉重設密碼視窗"
+                        data-i18n="[title]CloseResetPasswordWindow; [aria-label]CloseResetPasswordWindow">×</button>
+                    <div class="modal-title modal-font-color" tabindex="0" aria-label="重設密碼視窗"
+                        data-i18n="[aria-label]ResetPasswordWindow; [html]ModifyPd">重設密碼</div>
+                </div>
+                <div class="modal-body" id="set-pwd-modal-body">
+                    <label for="PwdsetPasswd" data-i18n="[html]NewPd">新密碼</label>
+                    <input type="password" id="set-new-pwd" class="form-control " placeholder="請輸入新密碼" title="重設密碼輸入框"
+                        aria-label="重設密碼輸入框"
+                        data-i18n="[placeholder]PleaseNewPassword; [title]ResetPasswordBox; [aria-label]ResetPasswordBox" />
+                    <br>
+                    <label class="form-control-label" for="PwdsetPasswd2" data-i18n="[html]NewPdConfirm">新密碼確認</label>
+                    <input type="password" id="set-new-pwd-confirm" class="form-control " placeholder="請再次輸入新密碼"
+                        title="密碼確認輸入框" aria-label="密碼確認輸入框"
+                        data-i18n="[placeholder]PleaseAgainNewPassword; [title]PasswordCheckInputBox; [aria-label]PasswordCheckInputBox" />
+                    <br>
+                    <button id="save-new-pwd-btn" class="btn fullwidthBtn" aria-label="確定修改"
+                        data-i18n="[aria-label]CheckModify; [html]ConductReset">進行重設</button>
+                    <div id="set-pwd-error-msg" class="warning"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--SignUpSuccess Dialog-->
+    <div id="SignUpSuccessModal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"
+        data-backdrop="static">
+        <div class="modal-dialog modal-dialog_cust">
+            <div class="modal-content">
+                <div class="modal-header  ">
+                    <button type="button" class="close modal-font-color" data-dismiss="modal" title="關閉註冊成功視窗"
+                        aria-label="關閉註冊成功視窗"
+                        data-i18n="[title]CloseRegistWindow; [aria-label]CloseRegistWindow">×</button>
+                    <div class="modal-title modal-font-color" tabindex="0" aria-label="註冊成功視窗"
+                        data-i18n="[aria-label]RegistWindow; [html]RegistSuccess">註冊成功</div>
+                </div>
+                <div class="modal-body" id="SignUpSuccessModalBody">
+                    <img src="image/qbichat.gif" alt="qbi貓打招呼" data-i18n="[alt]QbiCatGreeting" />
+                    <br />
+                    <p tabindex="0" aria-label="你好" data-i18n="[aria-label]Hi; [html]LoginWindow">你好，</p>
+                    <p tabindex="0" aria-label="恭喜您註冊成功!"
+                        data-i18n="[aria-label]CongratulationsRegistSuccess; [html]CongratulationsRegistSuccess">
+                        恭喜您註冊成功!</p>
+                    <button class="btn fullwidthBtn" data-dismiss="modal" title="關閉註冊成功視窗" aria-label="註冊成功視窗關閉"
+                        data-i18n="[title]CloseRegistWindow; [aria-label]CloseRegistWindow; [html]Close">關閉</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--Logout Dialog-->
+    <div id="log-out-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="false" data-backdrop="static"
+        data-backdrop="static">
+        <div class="modal-dialog modal-dialog_cust">
+            <div class="modal-content">
+                <div class="modal-header  ">
+                    <button type="button" class="close modal-font-color" data-dismiss="modal" aria-label="關閉登出視窗"
+                        title="關閉登出視窗" data-i18n="[aria-label]CloseLogoutWindow; [title]CloseLogoutWindow">×</button>
+                    <div class="modal-title modal-font-color" tabindex="0" aria-label="登出視窗"
+                        data-i18n="[aria-label]LogoutWindow; [html]Logout">登出</div>
+                </div>
+                <div class="modal-body" id="log-out-modal-body">
+                    <span data-i18n="[html]CheckLogout">是否確定登出? 登出將會重新建立聊天室</span>
+                </div>
+                <div class="modal-footer">
+                    <div class="col-md-12">
+                        <button class="btn" id='do-log-out-btn' data-dismiss="modal" data-i18n="[html]Ok">確定</button>
+                        <button class="btn" data-dismiss="modal" data-i18n="[html]Close">關閉</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--Login Dialog-->
+    <div id="LoginModal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="false" data-backdrop="static"
+        data-backdrop="static">
+        <div class="modal-dialog modal-dialog_cust">
+            <div class="modal-content">
+                <div class="modal-header  ">
+                    <button type="button" class="close modal-font-color" data-dismiss="modal" aria-label="關閉登入視窗"
+                        title="關閉登入視窗" data-i18n="[aria-label]CloseLoginWindow; [title]CloseLoginWindow">×</button>
+                    <div class="modal-title modal-font-color" tabindex="0" aria-label="登入視窗"
+                        data-i18n="[aria-label]LoginWindow; [html]Login">登入</div>
+                </div>
+                <div class="modal-body" id="LoginModalBody">
+                    <div class="inputcolumn">
+                        <!-- <select id="Login_phonesection" class="hx30">
+                            <option value="886">台灣(886)</option>
+                        </select> -->
+                        <div class="form-group">
+                            <div class="input-group">
+                                <span class="input-group-addon " id="basic-addon1"><i
+                                        class="glyphicon glyphicon-phone"></i></span>
+                                <label for="Loginnum"></label>
+                                <input type="text" id="Loginnum" class="form-control" title="手機號碼輸入框"
+                                    placeholder="請輸入手機號碼" aria-describedby="basic-addon1"
+                                    data-i18n="[title]CellphoneNumberBox; [placeholder]CellphoneNumber">
+                            </div>
+                        </div>
+                        <div class="input-group" id="login-password">
+                            <span class="input-group-addon "><i class="glyphicon glyphicon-pencil"></i></span>
+                            <label for="LoginPasswd"></label>
+                            <input type="password" id="LoginPasswd" class="form-control" title="密碼輸入框"
+                                aria-describedby="sizing-addon2" placeholder="請輸入密碼"
+                                data-i18n="[title]PasswordBox; [placeholder]Required_Pd">
+                            <span class="input-group-btn">
+                                <button id="forgetPasswordlink" class="btn" type="button"
+                                    data-i18n="[html]ForgotPassword">忘記密碼</button>
+                            </span>
+                        </div>
+                        <div class="columnhint" id="login-password-hint" data-i18n="[html]EnglistWord">英文字母需區分大小寫</div>
+                    </div>
+                    <div class="btn_box space-around">
+                        <div id="loginbtn" data-target="signModal" tabindex="0" aria-label="立即登入"
+                            data-i18n="[aria-label]LoginNow; [html]LoginNow">立即登入</div>
+                        <div id="registerAcount" class="right" data-dismiss="modal" tabindex="0" aria-label="新建用戶"
+                            data-i18n="[aria-label]NewUser; [html]NewUser">
+                            新建用戶
+                        </div>
+                    </div>
+                    <div class="warning"></div>
+                    <div class="login_other">
+                        <div tabindex="0" title="另開視窗 FaceBook 登入按鈕" class="loginFbBtn" id="login_fb_Btn"
+                            data-i18n="[title]LoginFbBtn"></div>
+                        <div tabindex="0" title="另開視窗 LINE 登入按鈕" class="loginLineBtn" id="login_line_Btn"
+                            data-i18n="[title]LoginLineBtn"></div>
+                        <div tabindex="0" title="另開視窗 Google 登入按鈕" class="loginGoogleBtn" id="login_google_Btn"
+                            data-i18n="[title]LoginGoogleBtn"></div>
+                        <div tabindex="0" title="另開視窗 Microsoft 登入按鈕" class="loginMicrosoftBtn" id="login_microsoft_Btn"
+                            data-i18n="[title]LoginMicrosoftBtn"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--SSO Login Dialog-->
+    <div id="SSOLoginModal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="false" data-backdrop="static"
+        data-backdrop="static">
+        <div class="modal-dialog modal-dialog_cust">
+            <div class="modal-content">
+                <div class="modal-header  ">
+                    <button type="button" class="close modal-font-color" data-dismiss="modal" aria-label="關閉登入視窗"
+                        title="關閉登入視窗" data-i18n="[aria-label]CloseLoginWindow; [title]CloseLoginWindow">×</button>
+                    <div class="modal-title modal-font-color" tabindex="0" aria-label="登入視窗"
+                        data-i18n="[aria-label]LoginWindow; [html]Login">登入</div>
+                </div>
+                <div class="modal-body" id="SSOLoginModalBody">
+                    <div style="text-align: center;" data-i18n="[html]ChooseChannelLogin">請使用以下通路進行登入</div>
+                    <div class="login_other">
+                        <div tabindex="0" title="另開視窗 FaceBook 登入按鈕" class="loginFbBtn" id="login_SSO_fb_Btn"
+                            data-i18n="[title]LoginFbBtn"></div>
+                        <div tabindex="0" title="另開視窗 LINE 登入按鈕" class="loginLineBtn" id="login_SSO_line_Btn"
+                            data-i18n="[title]LoginLineBtn"></div>
+                        <div tabindex="0" title="另開視窗 Google 登入按鈕" class="loginGoogleBtn" id="login_SSO_google_Btn"
+                            data-i18n="[title]LoginGoogleBtn"></div>
+                        <div tabindex="0" title="另開視窗 Microsoft 登入按鈕" class="loginMicrosoftBtn"
+                            id="login_SSO_microsoft_Btn" data-i18n="[title]LoginMicrosoftBtn"></div>
+                    </div>
+                    <div class="warning sso-warning"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--OtpLogin Dialog-->
+    <div id="OtpLoginModal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static">
+        <div class="modal-dialog modal-dialog_cust">
+            <div class="modal-content">
+                <div class="modal-header  ">
+                    <button type="button" class="close modal-font-color" data-dismiss="modal" title="關閉手機簡訊登入視窗"
+                        aira-label="關閉手機簡訊登入視窗"
+                        data-i18n="[title]CloseSMSLoginWindow; [aira-label]CloseSMSLoginWindow">×</button>
+                    <div class="modal-title modal-font-color" tabindex="0" aira-label="手機簡訊登入視窗"
+                        data-i18n="[aira-label]SMSLoginWindow; [html]SMSLogin">手機簡訊登入</div>
+                </div>
+                <div class="modal-body" id="signModalBody">
+                    <div class="inputcolumn">
+                        <label for="OtpLogin_phonenum"></label>
+                        <input type="text" id="OtpLogin_phonenum" placeholder="請輸入手機號" title="手機號碼輸入框" aria-label="手機號碼"
+                            data-i18n="[placeholder]PleaseInputPhoneNumber; [title]CellphoneNumberBox; [aria-label]CellPhoneNum" />
+                        <div class="columnhint" tabindex="0" aria-label="系統會發送驗證號碼至您的手機上"
+                            data-i18n="[aria-label]SystemVerifyNumber; [html]SystemVerifyNumber">系統會發送驗證號碼至您的手機上</div>
+                    </div>
+                    <button id="OtpLogin_SendBtn" class="btn fullwidthBtn" tabindex="0" aria-label="下一步"
+                        data-i18n="[aria-label]NextStep; [html]NextStep">下一步</button>
+                    <div class="warning"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--LoginSuccess Dialog-->
+    <div id="LoginSuccessModal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"
+        data-backdrop="static">
+        <div class="modal-dialog modal-dialog_cust">
+            <div class="modal-content">
+                <div class="modal-header  ">
+                    <button type="button" class="close modal-font-color" data-dismiss="modal" title="關閉登入成功視窗"
+                        aria-label="關閉登入成功視窗"
+                        data-i18n="[title]CloseLoginSuccessWindow; [aria-label]CloseLoginSuccessWindow">×</button>
+                    <div tabindex="0" class="modal-title modal-font-color" aria-label="關閉登入成功視窗按鈕"
+                        data-i18n="[aria-label]CloseLoginSuccessWindowBtn; [html]SuccessLogin">登入成功</div>
+                </div>
+                <div class="modal-body" id="LoginSuccessModalBody">
+                    <img src="image/qbichat.gif" alt="qbi貓打招呼" data-i18n="[alt]QbiCatGreeting" />
+                    <br />
+                    <div style="overflow: hidden; text-overflow: ellipsis;">
+                        <span tabindex="0" aria-label="使用者" data-i18n="[aria-label]User"></span>
+                        <p tabindex="0" aria-label="你好" data-i18n="[data-i18n]Hi; [html]Hello">你好！</p>
+                    </div>
+                    <button class="btn fullwidthBtn" data-dismiss="modal" title="關閉登入成功視窗" aria-label="關閉登入成功視窗"
+                        data-i18n="[title]CloseLoginSuccessWindow; [aria-label]CloseLoginSuccessWindow; [html]Close">關閉</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--ForgetPasswd Dialog-->
+    <div id="ForgetPasswdModal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"
+        data-backdrop="static">
+        <div class="modal-dialog modal-dialog_cust">
+            <div class="modal-content">
+                <div class="modal-header  ">
+                    <button type="button" class="close modal-font-color" data-dismiss="modal" title="關閉忘記密碼視窗"
+                        aria-label="關閉忘記密碼視窗"
+                        data-i18n="[title]CloseForgotPasswordWindow; [aria-label]CloseForgotPasswordWindow">×</button>
+                    <div class="modal-title modal-font-color" tabindex="0" aria-label="忘記密碼視窗"
+                        data-i18n="[aria-label]ForgotPasswordWindow; [html]ForgotPassword">忘記密碼</div>
+                </div>
+                <div class="modal-body" id="ForgetPasswdModalBody">
+                    <p tabindex="0" class="text-center" aria-label="忘記密碼嗎?不用擔心"
+                        data-i18n="[aria-label]RemindForgotPassword; [html]RemindForgotPassword"> 忘記密碼嗎?不用擔心</p>
+                    <p tabindex="0" class="text-center" aria-label="您可以通過以下方式找回密碼"
+                        data-i18n="[aria-label]GetBackPassword; [html]GetBackPassword"> 您可以通過以下方式找回密碼</p>
+                    <button tabindex="0" class="btn fullwidthBtn" id="OtpLoginBtn" aria-label="使用手機+簡訊登入"
+                        data-i18n="[aria-label]UsePhoneAndSMS; [html]UsePhoneAndSMS">使用手機+簡訊登入</button>
+                    <!-- <button class="btn fullwidthBtn" id="OtpSetPasswordBtn">2. 透過手機找回密碼</button> -->
+                    <!-- <button class="btn fullwidthBtn" data-dismiss="modal">3.透過郵件找回密碼</button> -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--Tokeninvalid Dialog-->
+    <div id="TokeninvalidModal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"
+        data-backdrop="static">
+        <div class="modal-dialog modal-dialog_cust">
+            <div class="modal-content">
+                <div class="modal-header  ">
+                    <button type="button" class="close modal-font-color" data-dismiss="modal" title="關閉提醒視窗"
+                        aria-label="關閉提醒視窗"
+                        data-i18n="[title]CloseRemindWindow; [aria-label]CloseRemindWindow">×</button>
+                    <div class="modal-title modal-font-color" tabindex="0" title="提醒視窗" aria-label="提醒視窗"
+                        data-i18n="[title]RemindWindow; [aria-label]RemindWindow; [html]Remind">提醒</div>
+                </div>
+                <div class="modal-body" id="TokeninvalidModalBody">
+                    <div class="modalwording" tabindex="0" aria-label="登入已超時，請重新登入"
+                        data-i18n="[aria-label]TimeoutRemind; [html]TimeoutRemind">登入已超時，請重新登入</div>
+                    <div class="btn_box">
+                        <button class="agree" tabindex="0" data-dismiss="modal" data-toggle="modal"
+                            data-target="#LoginModal" aria-label="重新登入"
+                            data-i18n="[aria-label]ReLogin; [html]ReLogin">重新登入</button>
+                        <button class="right" tabindex="0" data-dismiss="modal" aria-label="關閉視窗"
+                            data-i18n="[aria-label]CloseWindow; [html]Close">關閉</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--ReSend Dialog-->
+    <div id="ReSendModal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static">
+        <div class="modal-dialog modal-dialog_cust">
+            <div class="modal-content">
+                <div class="modal-header  ">
+                    <button type="button" class="close modal-font-color" data-dismiss="modal" title="關閉提醒視窗"
+                        aria-label="關閉提醒視窗"
+                        data-i18n="[title]CloseRemindWindow; [aria-label]CloseRemindWindow">×</button>
+                    <div class="modal-title modal-font-color" tabindex="0" title="提醒視窗" aria-label="提醒視窗"
+                        data-i18n="[title]RemindWindow; [aria-label]RemindWindow; [html]Remind">提醒</div>
+                </div>
+                <div class="modal-body" id="TokeninvalidModalBody">
+                    <div class="btn_box">
+                        <button class="agree" tabindex="0" data-dismiss="modal" aria-label="重新發送訊息"
+                            onclick="WebChat.disconnectAction('resend');"
+                            onkeypress="WebChat.disconnectAction('resend');"
+                            data-i18n="[aria-label]ResendMessage; [html]Resend">重新發送</button>
+                        <button class="right" tabindex="0" data-dismiss="modal" aria-label="刪除訊息"
+                            onclick="WebChat.disconnectAction('delete');"
+                            onkeypress="WebChat.disconnectAction('delete');"
+                            data-i18n="[aria-label]DeleteMessage; [html]DeleteMessage">刪除訊息</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--ApplyOtherAgent Dialog-->
+    <div id="ApplyOtherAgentModal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="false"
+        data-backdrop="static" data-backdrop="static">
+        <div class="modal-dialog modal-dialog_cust">
+            <div class="modal-content">
+                <div class="modal-header  ">
+                    <button type="button" class="close modal-font-color" data-dismiss="modal" title="關閉視窗"
+                        data-i18n="[title]CloseWindow">×</button>
+                    <div class="modal-title modal-font-color" data-i18n="[html]Remind">提醒</div>
+                </div>
+                <div class="modal-body" id="ApplyOtherAgentBody">
+                    <div class="modalwording" data-i18n="[html]ServiceRequestTransferAgentRemind">
+                        如需針對其他服務請求轉接客服，將會先斷掉目前這筆的對話並重新幫您轉接</div>
+                    <div class="btn_box">
+                        <div class="agree" data-dismiss="modal" data-i18n="[html]Agree">同意</div>
+                        <div class="right" data-dismiss="modal" data-i18n="[html]Cancel">取消</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 關注問題 HotTopic Dialog-->
+    <div id="HotTopicModal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-dialog_cust">
+            <div class="modal-content">
+                <div class="modal-header ">
+                    <button type="button" class="close modal-font-color" data-dismiss="modal" title="關閉視窗"
+                        data-i18n="[title]CloseWindow">×</button>
+                    <div class="modal-title modal-font-color" tabindex="0" id="HotTopicModalTitle">HotTopicTitle</div>
+                </div>
+                <div class="modal-body" id="dvHotTopicModalBody" style="overflow: hidden; overflow-y: scroll;">
+                    <div id="HotTopicList">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div class="col-md-12">
+                        <button class="btn" data-dismiss="modal" data-i18n="[html]Close">關閉</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- 選擇客服群組 Service Group Dialog-->
+    <div id="ServiceGroupModal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-dialog_cust">
+            <div class="modal-content">
+                <div class="modal-header ">
+                    <button type="button" class="close modal-font-color" data-dismiss="modal" title="關閉視窗"
+                        data-i18n="[title]CloseWindow">×</button>
+                    <div class="modal-title modal-font-color" tabindex="0" id="ServiceGroupModalTitle"
+                        data-i18n="[html]ChooseServiceGroup">選擇客服群組</div>
+                </div>
+                <div class="modal-body" id="dvServiceGroupModalBody">
+                    <div id="ServiceGroupList">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div class="col-md-12">
+                        <button class="btn" data-dismiss="modal" data-i18n="[html]Cancel">取消</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--Hint Dialog-->
+    <div id="HintModal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-dialog_cust">
+            <div class="modal-content">
+                <div class="modal-header ">
+                    <button type="button" title="關閉提示視窗" class="close modal-font-color" data-dismiss="modal"
+                        data-i18n="[title]ClosePromptWindow">×</button>
+                    <div class="modal-title modal-font-color" tabindex="0" aria-label="提示視窗" id="HintModalTitle"
+                        data-i18n="[aria-label]PromptWindow">
+                        HintModalTitle</div>
+                </div>
+                <div class="modal-body" id="dvHintModalBody" tabindex="0">
+                    <div id="HotTopicList" style='width:100%;height:100%'>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div class="col-md-12">
+                        <button class="btn" data-dismiss="modal" data-i18n="[html]Close">關閉</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--Survey Dialog-->
+    <div id="SurveyModal" class="modal fade" aria-labelledby="SurveyModal" tabindex="-1" role="dialog"
+        aria-hidden="true">
+        <div class="modal-dialog  modal-dialog_cust">
+            <div class="modal-content">
+                <div class="modal-header ">
+                    <button type="button" class="close modal-font-color" data-dismiss="modal" title="關閉滿意度調查視窗"
+                        aria-label="關閉滿意度調查視窗"
+                        data-i18n="[title]CloseSatisfactionWindow; [aria-label]CloseSatisfactionWindow">×</button>
+                    <div class="modal-title modal-font-color" tabindex="0" aria-label="滿意度調查" id="SurveyModalTitle"
+                        data-i18n="[aria-label]SurveyButtonText">
+                        SurveyModalTitle</div>
+                </div>
+                <div class="modal-body" id="dvSurveyModalBody" tabindex="0">
+                    SurveyModalBody
+                </div>
+                <div class="modal-footer">
+                    <div class="col-md-12">
+                        <button class="btn" id="submitSurveyButton">submitSurveyButton</button>
+                        <button class="btn" id="closeSurveyButton" data-dismiss="modal"
+                            data-i18n="[html]Close">關閉</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--Satisfy Dialog-->
+    <div id="SatisfyModal" class="modal fade" aria-labelledby="SatisfyModal" tabindex="-1" role="dialog"
+        aria-hidden="true">
+        <div class="modal-dialog  modal-dialog_cust">
+            <div class="modal-content">
+                <div class="modal-header ">
+                    <button type="button" class="close modal-font-color" data-dismiss="modal" title="關閉意見回饋視窗"
+                        aria-label="關閉意見回饋視窗"
+                        data-i18n="[title]CloseSatisfyWindow; [aria-label]CloseSatisfyWindow">×</button>
+                    <div class="modal-title modal-font-color" tabindex="0" aria-label="意見回饋" id="SatisfyModalTitle"
+                        data-i18n="[aria-label]SatisfyModalTitle">
+                        SatisfyModalTitle</div>
+                </div>
+                <div class="modal-body" id="dvSatisfyModalBody" tabindex="0">
+                    SatisfyModalBody
+                </div>
+                <div class="modal-footer">
+                    <div class="col-md-12">
+                        <button class="btn" id="sendFeedback">sendFeedback</button>
+                        <button class="btn" id="closeSatisfyButton" data-dismiss="modal"
+                            data-i18n="[html]Close">關閉</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--Satisfy Confirm Dialog-->
+    <div id="SatisfyConfirmModal" class="modal fade" aria-labelledby="SatisfyConfirmModal" tabindex="-1" role="dialog"
+        aria-hidden="true">
+        <div class="modal-dialog  modal-dialog_cust">
+            <div class="modal-content">
+                <div class="modal-header ">
+                    <button type="button" class="close modal-font-color" data-dismiss="modal" title="關閉意見回饋視窗"
+                        aria-label="關閉意見回饋視窗"
+                        data-i18n="[title]CloseSatisfyWindow; [aria-label]CloseSatisfyWindow">×</button>
+                    <div class="modal-title modal-font-color" tabindex="0" aria-label="意見回饋"
+                        id="SatisfyConfirmModalTitle" data-i18n="[aria-label]SatisfyConfirmModalTitle">
+                        SatisfyConfirmModalTitle</div>
+                </div>
+                <div class="modal-body" id="dvSatisfyConfirmModalBody" tabindex="0">
+                    SatisfyConfirmModalBody
+                </div>
+                <div class="modal-footer">
+                    <div class="col-md-12" style="text-align: center;">
+                        <button class="btn" id="confirmSatisfy">confirmSatisfy</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Queue waiting Dialog -->
+    <div id="queueZoneModal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static">
+        <div class="modal-dialog modal-dialog_cust">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <img class="clock" src="./image/time.gif" alt="時鐘旋轉圖" data-i18n="[alt]ClockPicture">
+                    <div class="wording" tabindex="0" data-i18n="[html]TransferAgent">
+                        等待中.....<br>
+                        為您轉接服務人員，請稍候
+                    </div>
+                    <div class="btn_box">
+                        <div id="waitQueue" onkeypress="WebChat.doWaitQueueButtonClick();" tabindex="0"
+                            onclick="WebChat.doWaitQueueButtonClick();" style="display: none;"
+                            data-i18n="[html]ContinueWait">繼續等待</div>
+                        <div id="cancelQueue" onkeypress="WebChat.doCancelQueueButtonClick();" tabindex="0"
+                            onclick="WebChat.doCancelQueueButtonClick();" style="display: none;"
+                            data-i18n="[html]CancelWait">取消等待</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--LeaveWord Dialog-->
+    <div id="LeaveWordModal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog  modal-dialog_cust">
+            <div class="modal-content">
+                <div class="modal-header ">
+                    <button type="button" class="close modal-font-color" data-dismiss="modal" title="關閉留言視窗"
+                        data-i18n="[title]CloseLeaveMessageWindow">×</button>
+                    <div class="modal-title modal-font-color" tabindex="0" aria-label="留言" id="LeaveWordModalTitle"
+                        data-i18n="[aria-label]LeaveWord">
+                        LeaveWordModalTitle</div>
+                </div>
+                <div class="modal-body" id="dvLeaveWordModalBody">
+                    <div id=messageForm class=messageForm>
+                        <dl>
+                            <dt>
+                                <p class="agentTip"></p>
+                                <p data-i18n="[html]LeaveContact">
+                                    請您留下聯絡資料，我們將儘快安排客服人員與您聯絡。
+                                    <br data-i18n="[html]ServiceInformation"> 如有緊急需求（例如：掛失），歡迎您撥打0800-XXX-XXX
+                                    或02-XXXX-XXXX（手機請撥付費電話），本行當竭誠為您服務，謝謝您！
+                                </p>
+                            </dt>
+                            <dd>
+                                <label for="name">姓名*</label>
+                                <input type="text" id="name" name="name" class="inline long" required title="姓名輸入框"
+                                    aria-label="姓名">
+                            </dd>
+                            <dd>
+                                <label>性 別</label>
+                                <input type="radio" name="gen" id="gen0" value="man" title="先生選擇框" aria-label="先生" class="inline radio genRadio"
+                                    checked="">
+                                <label for="gen0" class="inline">先生</label>
+                                <input type="radio" name="gen" id="gen1" value="women" title="小姐選擇框" aria-label="小姐" class="inline radio genRadio">
+                                <label for="gen1" class="inline">小姐</label>
+                            </dd>
+                            <dd>
+                                <label for="card">身份證字號</label>
+                                <input type="text" id="card" name="card" class="long" title="身份證字號" aria-label="身份證字號">
+                            </dd>
+                            <dd>
+                                <label for="email">電子郵件*</label>
+                                <input type="text" id="email" name="email" class="long" required title="電子郵件"
+                                    aria-label="電子郵件">
+                            </dd>
+                            <dd>
+                                <label for="phone">行動電話*</label>
+                                <input type="text" id="phone" name="phone" class="long" required title="行動電話"
+                                    aria-label="行動電話">
+                            </dd>
+                            <dd>
+                                <label for="question">問題類別*</label>
+                                <select id="question" name="question" class="long question" tabindex="0"
+                                    aria-label="問題類別">
+                                    <option value="0">信用卡相關 </option>
+                                    <option value="1">存款、貸款、基金及外匯相關 </option>
+                                    <option value="2">壽險相關 </option>
+                                    <option value="3">產險相關</option>
+                                </select>
+                            </dd>
+                            <dd>
+                                <label for="msgContent">留言*</label>
+                                <textarea id="msgContent" name="msgContent" class="long"
+                                    style="height:50px;resize:none"></textarea>
+                            </dd>
+                            <dd>
+                                <!--<input type="button" value="留言" id="LeaveWordButton" class="inline">-->
+                                <span id="msgTip"></span>
+                            </dd>
+                        </dl>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div class="col-md-12">
+                        <button class="btn" id="LeaveWordButton">留言</button>
+                        <button class="btn" data-dismiss="modal">關閉</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--webcallCancel Dialog  byjoanne-->
+    <div id="WebcallCancelModal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="false"
+        data-backdrop="static" data-backdrop="static">
+        <div class="modal-dialog modal-dialog_cust">
+            <div class="modal-content">
+                <div class="modal-header  ">
+                    <button type="button" class="close modal-font-color" data-dismiss="modal" title="關閉提醒視窗"
+                        data-i18n="[title]CloseRemindWindow">×</button>
+                    <div class="modal-title modal-font-color" data-i18n="[html]Remind">提醒</div>
+                </div>
+                <div class="modal-body" id="ApplyOtherAgentBody">
+                    <div class="modalwording" data-i18n="[html]CheckCloseConversation">請問是否要關閉此對話</div>
+                    <div class="btn_box">
+                        <div id="WebcallCancelAgree" class="agree" data-dismiss="modal" data-i18n="[html]Agree">同意</div>
+                        <div class="right" data-dismiss="modal" data-i18n="[html]Cancel">取消</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--OpenP4 Dialog-->
+    <div id="OpenP4Modal" class="modal" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static"
+        style="display:none; top:15%;">
+        <div class="" style="height: 100%;">
+            <div class="modal-content" style="height: 100%;">
+                <div class="modal-header ">
+                    <button id="close-P4modal-btn" type="button" class="close modal-font-color" title="關閉視窗"
+                        data-i18n="[title]CloseWindow">×</button>
+                </div>
+                <div class="modal-body" style="height: 100%;">
+                    <iframe src="" title="Iframe Dialog"></iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--OTP Sign-->
+    <div id="OtpSignModal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static">
+        <div class="modal-dialog modal-dialog_cust">
+            <div class="modal-content">
+                <div class="modal-header  ">
+                    <button type="button" class="close modal-font-color" data-dismiss="modal" title="關閉註冊視窗"
+                        aria-label="關閉註冊視窗"
+                        data-i18n="[title]CloseRegistWindow; [aria-label]CloseRegistWindow">×</button>
+                    <div class="modal-title modal-font-color" aria-label="註冊"
+                        data-i18n="[aria-label]Regist; [html]Regist">註冊</div>
+                </div>
+                <div class="modal-body" id="OtpSignModalBody">
+                    <label class="form-control-label" for="otp-sign-nickname" data-i18n="[html]NickName">暱稱</label>
+                    <input type="text" id="otp-sign-nickname" class="form-control " placeholder="請輸入暱稱" title="暱稱輸入框"
+                        aria-label="暱稱輸入框"
+                        data-i18n="[placeholder]InputNickName; [title]NickNameBox; [aria-label]NickNameBox" />
+                    <br>
+                    <label class="form-control-label" for="otp-sign-otp" data-i18n="[html]OtpVerifiedCode">OTP 驗證碼
+                        (<span id="otp-sign-phone">
+                        </span>)</label>
+                    <div style="display:flex; justify-content: space-between;">
+                        <input type="text" id="otp-sign-otp" class="form-control " placeholder="請輸入收到的驗證碼"
+                            title="驗證碼輸入框" aria-label="驗證碼輸入框" style="width: 50%;"
+                            data-i18n="[placeholder]EnterReceiveVerify; [title]VerifyInputBox; [aria-label]VerifyInputBox">
+                        <button class="btn otp-send" style="width: 40%; margin-left: 0.4rem;" disabled=""
+                            aria-label="重新發送" data-i18n="[aria-label]Resend; [html]Resend">重新發送</button>
+                    </div>
+                    <div>
+                        <span id="otp-sign-timeCountdown" tabindex="0" aria-label="我們已經向您發送驗證碼，接收大約需要50秒"
+                            data-i18n="[aria-label]OTPTimeCountdown; [html]OTPTimeCountdown">我們已經向您發送驗證碼，接收大約需要50秒</span>
+                    </div>
+                    <br>
+                    <div class="warning"></div>
+                    <!-- <button class="btn fullwidthBtn" id="OTP_VerifyBtn" aria-label="下一步">下一步</button> -->
+                    <div style="display: flex;justify-content: space-between;">
+                        <button class="btn OTP_modifyPhone" style="width:50%; margin-right: 0.4rem;" aria-label="返回"
+                            data-i18n="[aria-label]Return; [html]Return">返回</button>
+                        <button class="btn sign-complete" style="width:50%; margin-left: 0.4rem;" id="otp-sign-complete"
+                            aria-label="完成註冊"
+                            data-i18n="[aria-label]CompleteRegistration; [html]CompleteRegistration">完成註冊</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--HTML PopUp Dialog-->
+    <div id="HTMLPopupModal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body" id="HTMLPopupModalBody">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--Disconnect Dialog-->
+    <div id="DisconnectModal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static">
+        <div class="modal-dialog modal-dialog_cust">
+            <div class="modal-content">
+                <div class="modal-header  ">
+                    <button type="button" class="close modal-font-color" data-dismiss="modal" title="關閉提醒視窗"
+                        aria-label="關閉提醒視窗"
+                        data-i18n="[title]CloseRemindWindow; [aria-label]CloseRemindWindow">×</button>
+                    <div class="modal-title modal-font-color" tabindex="0" title="提醒視窗" aria-label="提醒視窗"
+                        data-i18n="[title]RemindWindow; [aria-label]RemindWindow; [html]Remind">提醒</div>
+                </div>
+                <div class="modal-body" id="TokeninvalidModalBody">
+                    <div class="modalwording" tabindex="0" aria-label="聊天室已被斷線"
+                        data-i18n="[aria-label]WebchatTimeout; [html]WebchatTimeout">聊天室已被斷線</div>
+                    <div class="btn_box" style="display: flex; justify-content: center;">
+                        <button id="DisconnectCloseBtn" tabindex="0" data-dismiss="modal" aria-label="關閉視窗"
+                            data-i18n="[aria-label]CloseWindow; [html]Close">關閉</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="upload_div"></div>
+
+    <script src="./common/I18n.js"></script>
+
+</body>
+
+</html>"
+          },
+          "redirectURL": "",
+          "headersSize": -1,
+          "bodySize": 0,
+          "_transferSize": 0,
+          "_error": null,
+          "_fetchedViaServiceWorker": false
+        },
+        "serverIPAddress": "150.171.110.70",
+        "startedDateTime": "2026-05-17T09:54:27.645Z",
+        "time": 20.791999995708466,
+        "timings": {
+          "blocked": 8.599000020444393,
+          "dns": -1,
+          "ssl": -1,
+          "connect": -1,
+          "send": 0,
+          "wait": 3.117999995334074,
+          "receive": 9.074999979929999,
+          "_blocked_queueing": 6.852000020444393,
+          "_workerStart": -1,
+          "_workerReady": -1,
+          "_workerFetchStart": -1,
+          "_workerRespondWithSettled": -1
+        },
+        "_fromCache": "disk",
+        "pageref": "page_1"
+      },
+      {
+        "_initiator": {
+          "type": "parser",
+          "url": "https://ltcai.mohw.gov.tw/webchat/index.html",
+          "lineNumber": 12
+        },
+        "_priority": "High",
+        "_resourceType": "script",
+        "cache": {},
+        "connection": "443",
+        "request": {
+          "method": "GET",
+          "url": "https://ltcai.mohw.gov.tw/webchat/lib/jquery.min.js",
+          "httpVersion": "http/2.0",
+          "headers": [
+            {
+              "name": "sec-ch-ua-platform",
+              "value": ""Windows""
+            },
+            {
+              "name": "Referer",
+              "value": "https://ltcai.mohw.gov.tw/webchat/index.html"
+            },
+            {
+              "name": "User-Agent",
+              "value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36"
+            },
+            {
+              "name": "sec-ch-ua",
+              "value": ""Chromium";v="148", "Google Chrome";v="148", "Not/A)Brand";v="99""
+            },
+            {
+              "name": "sec-ch-ua-mobile",
+              "value": "?0"
+            }
+          ],
+          "queryString": [],
+          "cookies": [],
+          "headersSize": -1,
+          "bodySize": 0
+        },
+        "response": {
+          "status": 200,
+          "statusText": "",
+          "httpVersion": "http/2.0",
+          "headers": [
+            {
+              "name": "etag",
+              "value": ""69df861a-15d9d""
+            },
+            {
+              "name": "accept-ranges",
+              "value": "bytes"
+            },
+            {
+              "name": "x-cache",
+              "value": "CONFIG_NOCACHE"
+            },
+            {
+              "name": "content-length",
+              "value": "89501"
+            },
+            {
+              "name": "date",
+              "value": "Fri, 15 May 2026 01:37:46 GMT"
+            },
+            {
+              "name": "content-type",
+              "value": "application/javascript"
+            },
+            {
+              "name": "last-modified",
+              "value": "Wed, 15 Apr 2026 12:35:38 GMT"
+            },
+            {
+              "name": "x-azure-ref",
+              "value": "20260515T013746Z-156cd47bfd5zlbmqhC1HKGrr38000000088g00000000kg3s"
+            }
+          ],
+          "cookies": [],
+          "content": {
+            "size": 89501,
+            "mimeType": "application/javascript",
+            "text": "/*! jQuery v3.6.0 | (c) OpenJS Foundation and other contributors | jquery.org/license */
+!function(e,t){"use strict";"object"==typeof module&&"object"==typeof module.exports?module.exports=e.document?t(e,!0):function(e){if(!e.document)throw new Error("jQuery requires a window with a document");return t(e)}:t(e)}("undefined"!=typeof window?window:this,function(C,e){"use strict";var t=[],r=Object.getPrototypeOf,s=t.slice,g=t.flat?function(e){return t.flat.call(e)}:function(e){return t.concat.apply([],e)},u=t.push,i=t.indexOf,n={},o=n.toString,v=n.hasOwnProperty,a=v.toString,l=a.call(Object),y={},m=function(e){return"function"==typeof e&&"number"!=typeof e.nodeType&&"function"!=typeof e.item},x=function(e){return null!=e&&e===e.window},E=C.document,c={type:!0,src:!0,nonce:!0,noModule:!0};function b(e,t,n){var r,i,o=(n=n||E).createElement("script");if(o.text=e,t)for(r in c)(i=t[r]||t.getAttribute&&t.getAttribute(r))&&o.setAttribute(r,i);n.head.appendChild(o).parentNode.removeChild(o)}function w(e){return null==e?e+"":"object"==typeof e||"function"==typeof e?n[o.call(e)]||"object":typeof e}var f="3.6.0",S=function(e,t){return new S.fn.init(e,t)};function p(e){var t=!!e&&"length"in e&&e.length,n=w(e);return!m(e)&&!x(e)&&("array"===n||0===t||"number"==typeof t&&0<t&&t-1 in e)}S.fn=S.prototype={jquery:f,constructor:S,length:0,toArray:function(){return s.call(this)},get:function(e){return null==e?s.call(this):e<0?this[e+this.length]:this[e]},pushStack:function(e){var t=S.merge(this.constructor(),e);return t.prevObject=this,t},each:function(e){return S.each(this,e)},map:function(n){return this.pushStack(S.map(this,function(e,t){return n.call(e,t,e)}))},slice:function(){return this.pushStack(s.apply(this,arguments))},first:function(){return this.eq(0)},last:function(){return this.eq(-1)},even:function(){return this.pushStack(S.grep(this,function(e,t){return(t+1)%2}))},odd:function(){return this.pushStack(S.grep(this,function(e,t){return t%2}))},eq:function(e){var t=this.length,n=+e+(e<0?t:0);return this.pushStack(0<=n&&n<t?[this[n]]:[])},end:function(){return this.prevObject||this.constructor()},push:u,sort:t.sort,splice:t.splice},S.extend=S.fn.extend=function(){var e,t,n,r,i,o,a=arguments[0]||{},s=1,u=arguments.length,l=!1;for("boolean"==typeof a&&(l=a,a=arguments[s]||{},s++),"object"==typeof a||m(a)||(a={}),s===u&&(a=this,s--);s<u;s++)if(null!=(e=arguments[s]))for(t in e)r=e[t],"__proto__"!==t&&a!==r&&(l&&r&&(S.isPlainObject(r)||(i=Array.isArray(r)))?(n=a[t],o=i&&!Array.isArray(n)?[]:i||S.isPlainObject(n)?n:{},i=!1,a[t]=S.extend(l,o,r)):void 0!==r&&(a[t]=r));return a},S.extend({expando:"jQuery"+(f+Math.random()).replace(/\\D/g,""),isReady:!0,error:function(e){throw new Error(e)},noop:function(){},isPlainObject:function(e){var t,n;return!(!e||"[object Object]"!==o.call(e))&&(!(t=r(e))||"function"==typeof(n=v.call(t,"constructor")&&t.constructor)&&a.call(n)===l)},isEmptyObject:function(e){var t;for(t in e)return!1;return!0},globalEval:function(e,t,n){b(e,{nonce:t&&t.nonce},n)},each:function(e,t){var n,r=0;if(p(e)){for(n=e.length;r<n;r++)if(!1===t.call(e[r],r,e[r]))break}else for(r in e)if(!1===t.call(e[r],r,e[r]))break;return e},makeArray:function(e,t){var n=t||[];return null!=e&&(p(Object(e))?S.merge(n,"string"==typeof e?[e]:e):u.call(n,e)),n},inArray:function(e,t,n){return null==t?-1:i.call(t,e,n)},merge:function(e,t){for(var n=+t.length,r=0,i=e.length;r<n;r++)e[i++]=t[r];return e.length=i,e},grep:function(e,t,n){for(var r=[],i=0,o=e.length,a=!n;i<o;i++)!t(e[i],i)!==a&&r.push(e[i]);return r},map:function(e,t,n){var r,i,o=0,a=[];if(p(e))for(r=e.length;o<r;o++)null!=(i=t(e[o],o,n))&&a.push(i);else for(o in e)null!=(i=t(e[o],o,n))&&a.push(i);return g(a)},guid:1,support:y}),"function"==typeof Symbol&&(S.fn[Symbol.iterator]=t[Symbol.iterator]),S.each("Boolean Number String Function Array Date RegExp Object Error Symbol".split(" "),function(e,t){n["[object "+t+"]"]=t.toLowerCase()});var d=function(n){var e,d,b,o,i,h,f,g,w,u,l,T,C,a,E,v,s,c,y,S="sizzle"+1*new Date,p=n.document,k=0,r=0,m=ue(),x=ue(),A=ue(),N=ue(),j=function(e,t){return e===t&&(l=!0),0},D={}.hasOwnProperty,t=[],q=t.pop,L=t.push,H=t.push,O=t.slice,P=function(e,t){for(var n=0,r=e.length;n<r;n++)if(e[n]===t)return n;return-1},R="checked|selected|async|autofocus|autoplay|controls|defer|disabled|hidden|ismap|loop|multiple|open|readonly|required|scoped",M="[\\\\x20\\\	\\\\r\\\
+\\\\f]",I="(?:\\\\\\\\[\\\\da-fA-F]{1,6}"+M+"?|\\\\\\\\[^\\\\r\\\
+\\\\f]|[\\\\w-]|[^\\0-\\\\x7f])+",W="\\\\["+M+"*("+I+")(?:"+M+"*([*^$|!~]?=)"+M+"*(?:'((?:\\\\\\\\.|[^\\\\\\\\'])*)'|\\"((?:\\\\\\\\.|[^\\\\\\\\\\"])*)\\"|("+I+"))|)"+M+"*\\\\]",F=":("+I+")(?:\\\\((('((?:\\\\\\\\.|[^\\\\\\\\'])*)'|\\"((?:\\\\\\\\.|[^\\\\\\\\\\"])*)\\")|((?:\\\\\\\\.|[^\\\\\\\\()[\\\\]]|"+W+")*)|.*)\\\\)|)",B=new RegExp(M+"+","g"),$=new RegExp("^"+M+"+|((?:^|[^\\\\\\\\])(?:\\\\\\\\.)*)"+M+"+$","g"),_=new RegExp("^"+M+"*,"+M+"*"),z=new RegExp("^"+M+"*([>+~]|"+M+")"+M+"*"),U=new RegExp(M+"|>"),X=new RegExp(F),V=new RegExp("^"+I+"$"),G={ID:new RegExp("^#("+I+")"),CLASS:new RegExp("^\\\\.("+I+")"),TAG:new RegExp("^("+I+"|[*])"),ATTR:new RegExp("^"+W),PSEUDO:new RegExp("^"+F),CHILD:new RegExp("^:(only|first|last|nth|nth-last)-(child|of-type)(?:\\\\("+M+"*(even|odd|(([+-]|)(\\\\d*)n|)"+M+"*(?:([+-]|)"+M+"*(\\\\d+)|))"+M+"*\\\\)|)","i"),bool:new RegExp("^(?:"+R+")$","i"),needsContext:new RegExp("^"+M+"*[>+~]|:(even|odd|eq|gt|lt|nth|first|last)(?:\\\\("+M+"*((?:-\\\\d)?\\\\d*)"+M+"*\\\\)|)(?=[^-]|$)","i")},Y=/HTML$/i,Q=/^(?:input|select|textarea|button)$/i,J=/^h\\d$/i,K=/^[^{]+\\{\\s*\\[native \\w/,Z=/^(?:#([\\w-]+)|(\\w+)|\\.([\\w-]+))$/,ee=/[+~]/,te=new RegExp("\\\\\\\\[\\\\da-fA-F]{1,6}"+M+"?|\\\\\\\\([^\\\\r\\\
+\\\\f])","g"),ne=function(e,t){var n="0x"+e.slice(1)-65536;return t||(n<0?String.fromCharCode(n+65536):String.fromCharCode(n>>10|55296,1023&n|56320))},re=/([\\0-\\x1f\\x7f]|^-?\\d)|^-$|[^\\0-\\x1f\\x7f-\\uFFFF\\w-]/g,ie=function(e,t){return t?"\\0"===e?"\\ufffd":e.slice(0,-1)+"\\\\"+e.charCodeAt(e.length-1).toString(16)+" ":"\\\\"+e},oe=function(){T()},ae=be(function(e){return!0===e.disabled&&"fieldset"===e.nodeName.toLowerCase()},{dir:"parentNode",next:"legend\

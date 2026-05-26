@@ -1,0 +1,318 @@
+﻿:root {
+    --letter-spacing-en-us: 2px; 
+    --letter-spacing-ja-jp: 5px;
+    --letter-spacing-zh-cn:10px;
+    --letter-spacing-zh-tw:10px;
+}
+
+.modal-title {
+    text-align: center;
+    font-size: 0.6428571rem;
+}
+
+/* 依據語言變更 letter-spacing */
+[lang="en_us"] .modal-title {
+    letter-spacing: var(--letter-spacing-en-us);
+}
+[lang="ja_jp"] .modal-title {
+    letter-spacing: var(--letter-spacing-ja-jp);
+}
+[lang="zh_cn"] .modal-title {
+    letter-spacing: var(--letter-spacing-zh-cn);
+}
+[lang="zh_tw"] .modal-title {
+    letter-spacing: var(--letter-spacing-zh-tw);
+}
+
+.modal-dialog_cust {
+    max-width: 360px !important;
+    margin-top: 100px !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+}
+
+.modal-dialog_cust .modal-header {
+    padding: 8px !important;
+}
+
+
+.close {
+    opacity: 1 !important;
+}
+
+/* 登入modal輸入框 */
+.inputcolumn {
+    width: 80%;
+    margin: 0 auto;
+    padding: 9px 8px;
+}
+
+.inputcolumn input {
+    width: 100%;
+    border: 1px solid #8c8c8c;
+    height: 38px;
+    padding: 0px 10px;
+    /* box-shadow: inset 0px 1px 4px #999999; */
+    border-radius: 4px;
+    vertical-align: middle;
+}
+
+.columnhint {
+    color: gray;
+    margin-top: 5px;
+}
+
+#LoginPasswd {
+    width: 90%;
+}
+
+#LoginModal .warning {
+    width: 75%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 10px;
+}
+
+/* 忘記密碼按鈕 */
+#forgetPasswordlink {
+    width: 80px;
+    height: 30px;
+    background-color: #3db9ea;
+    border-radius: 60px;
+    float: right;
+    text-align: center;
+    color: #fff;
+    line-height: 0.8em;
+    padding: 8px;
+    margin-top: -3px;
+    cursor: pointer;
+}
+
+#forgetPasswordlink:hover {
+    width: 80px;
+    height: 30px;
+    box-shadow: 4px 4px 3px rgba(20%, 20%, 40%, 0.5);
+}
+
+.btn_box {
+    width: 75%;
+    margin: 0 auto;
+}
+
+.btn_box.space-around {
+    display: flex;
+    justify-content: space-around;
+}
+
+.btn_box div {
+    width: 40%;
+    height: 35px;
+    margin-top: 5px;
+    padding-top: 7px;
+    border-radius: 5px;
+    /* background: #8e8e8e; Old browsers */
+    /* background: -moz-linear-gradient(top,  #8e8e8e 0%, #000000 100%); FF3.6-15 */
+    /* background: -webkit-linear-gradient(top,  #8e8e8e 0%,#000000 100%); Chrome10-25,Safari5.1-6 */
+    /* background: linear-gradient(to bottom,  #8e8e8e 0%,#000000 100%); W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    /* filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#8e8e8e', endColorstr='#000000',GradientType=0 ); IE6-9 */
+    /* border-radius: 10px; */
+    /* color: #ffffff; */
+    text-align: center;
+    letter-spacing: 2px;
+    display: inline-block;
+    cursor: pointer;
+}
+
+.btn_box button {
+    width: 40%;
+    height: 35px;
+    margin-top: 5px;
+    background: #337ab7;
+    /* Old browsers */
+    background: -moz-linear-gradient(top, #337ab7 0%, #337ab7 100%);
+    /* FF3.6-15 */
+    background: -webkit-linear-gradient(top, #337ab7 0%, #337ab7 100%);
+    /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(to bottom,
+            #337ab7 0%,
+            #337ab7 100%);
+    /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#337ab7', endColorstr='#337ab7', GradientType=0);
+    /* IE6-9 */
+    border-radius: 10px;
+    color: #ffffff;
+    text-align: center;
+    letter-spacing: 2px;
+    display: inline-block;
+    cursor: pointer;
+    border: unset;
+}
+
+.btn_box div:hover {
+    box-shadow: 4px 4px 3px rgba(20%, 20%, 40%, 0.5);
+}
+
+.btn_box .right {
+    float: right;
+}
+
+.login_other {
+    width: 75%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.login_other div {
+    width: 35px;
+    height: 35px;
+    cursor: pointer;
+    background-size: contain;
+}
+
+.loginGoogleBtn {
+    background-image: url(../image/thrid-party-channel/google.png);
+}
+
+.loginLineBtn {
+    background-image: url(../image/thrid-party-channel/line.png);
+}
+
+.loginFbBtn {
+    background-image: url(../image/thrid-party-channel/facebook.png);
+}
+
+.loginMicrosoftBtn {
+    background-image: url(../image/thrid-party-channel/microsoft.png);
+}
+
+.text_blue {
+    color: blue;
+}
+
+.fullwidthBtn {
+    font-weight: bold !important;
+    width: 100%;
+    margin: 15px 0px 15px 0px;
+}
+
+.fullwidthBtn:hover {
+    box-shadow: 4px 4px 3px rgba(20%, 20%, 40%, 0.5);
+}
+
+.hx30 {
+    height: 30px;
+}
+
+#OTPModalBody {
+    text-align: center;
+}
+
+#OTP_phone {
+    text-align: center;
+    font-weight: bold;
+    font-size: 1rem;
+}
+
+#SignUpSuccessModalBody {
+    text-align: center;
+}
+
+.mt10 {
+    margin-top: 10px;
+}
+
+#LoginSuccessModalBody {
+    text-align: center;
+}
+
+#LoginSuccessModalBody img {
+    width: 80px !important;
+}
+
+.warning {
+    color: red;
+}
+
+.sso-warning {
+    text-align: center;
+    margin-top: 0.5rem;
+}
+
+.modalwording {
+    text-align: center;
+    padding: 10px;
+}
+
+#queueZoneModal .modal-content {
+    text-align: center;
+    background-color: rgba(0, 0, 0, 0);
+    box-shadow: none;
+    -webkit-box-shadow: none;
+    border: none;
+}
+
+#queueZoneModal .modal-backdrop {
+    background-color: white;
+}
+
+#queueZoneModal .clock {
+    width: 200px;
+}
+
+#queueZoneModal .wording {
+    margin-top: 20px;
+    color: #146f96;
+    font-weight: bold;
+}
+
+#queueZoneModal {
+    overflow: auto;
+}
+
+#cancelQueue {
+    margin-top: 40px;
+    height: 30px;
+    padding-top: 5px;
+}
+
+#waitQueue {
+    margin-top: 40px;
+    height: 30px;
+    padding-top: 5px;
+}
+
+.modal-header button {
+    position: absolute;
+    text-shadow: none !important;
+    font-size: 0.8rem;
+    font-weight: bold;
+    bottom: unset;
+    left: unset;
+    right: 10px;
+    top: 10px;
+}
+
+#HTMLPopupModal .modal-body {
+    padding: 5px !important;
+}
+
+#HTMLPopupModal .modal-content {
+    width: fit-content;
+    margin: auto;
+}
+
+#HTMLPopupModal .modal-dialog {
+    top: 20% !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+}
+
+@media (min-width: 768px) {
+    #HTMLPopupModal .modal-dialog {
+        width: 90vw;
+    }
+}

@@ -1,0 +1,2324 @@
+﻿* {
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+}
+
+[unselectable="on"] {
+    user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -webkit-user-select: none;
+}
+
+[contenteditable="true"]:empty:before {
+    content: attr(placeholder);
+    color: #999999;
+    /* For Firefox */
+    display: block;
+}
+
+[contenteditable="true"]:focus:before {
+    content: "";
+}
+
+html {
+    width: 100%;
+    height: 100%;
+    font-size: 1.75rem;
+    line-height: 18px;
+}
+
+body {
+    font-family: "Microsoft JhengHei", "微軟正黑體", sans-serif !important;
+    overflow: hidden;
+    background-color: #fff;
+    width: 100%;
+    height: 100%;
+    margin: 0px;
+}
+
+.Link {
+    color: #808080;
+    text-decoration: none;
+    font-family: 微軟正黑體, 微軟雅黑;
+}
+
+.Link[href] {
+    color: #2080e0;
+}
+
+label[action] {
+    color: #2080e0;
+    cursor: pointer;
+    text-decoration: underline;
+    display: initial;
+}
+
+.link-text {
+    color: #23527c;
+}
+
+ol {
+    padding: 0px;
+}
+
+li span {
+    margin-left: 15px;
+}
+
+area {
+    outline: none;
+}
+
+button {
+    outline: none;
+    padding: 0px;
+}
+
+#TopZone {
+    position: absolute;
+    left: 0px;
+    width: 100%;
+    top: 0px;
+    height: 40px;
+    background-color: #ffffff;
+}
+
+.container {
+    width: auto !important;
+}
+
+#LeftZone {
+    position: absolute;
+    left: 0px;
+    right: 0px;
+    top: 0px;
+    bottom: 0px;
+    /* background-color	: #FFFFFF; */
+}
+#RightZone {
+    position: absolute;
+    width: 335px;
+    top: 0px;
+    bottom: 0px;
+    right: 0px;
+}
+
+#icn_balloon {
+    background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACEAAAAYCAYAAAB0kZQKAAABLUlEQVRIx82XzwoBQRzH9wHcPAC1Nx6AsxtP4aJIKe5urh5hUzyDi5SDWvLnIIlSDotETsh1fEe/kTbtrs2a2fo09eu3+/s0OzvzW00zUppHYiAPDNAHG3AGFxo3FDcoL+bluYwxzS0pBEpgDJgPxnR/yK9EGRx9FrdzApVvJHRg/qi4HZOe7yiRBveABAR3qvNRIhtwcTtZu4T+ZwGB/i4xkiQxEhIJSQKCBJdoSpZocQnLLbHYqTFxHa/nV3x2WL3i9WHDMdcBi0vcJEvclJGwJK+J5+toqbAwlfhEldislNm2lTjABJk/HOVrquPa1AwClMh9095VqC37tcQORP00upMAZKog7EXinTgoUEvfA1OwAEsapxQXLX+Spr4N5mBLvwZ8JvagCyJc4gG3Y4mxro8dKAAAAABJRU5ErkJggg==) no-repeat 0 6px;
+    display: inline-block;
+    height: 100%;
+    width: 33px;
+    margin: 0 8px 0 10px;
+    position: absolute;
+}
+
+#Title {
+    background-repeat: no-repeat;
+    background-position: 0px 11px;
+    color: #000000;
+    font-family: 微軟正黑體;
+    font-size: 0.857142rem;
+    font-weight: bold;
+    height: 40px;
+    line-height: 40px;
+    position: absolute;
+    left: 50px;
+}
+
+.TopButtonZone {
+    position: absolute;
+    height: 23px;
+    right: 16px;
+    top: 8px;
+}
+
+.TopButton {
+    border: 2px solid #009d42;
+    border-radius: 12px;
+    height: 23px;
+    min-width: 23px;
+    line-height: 19px;
+    color: #009d42;
+    text-align: center;
+    font-weight: bold;
+    font-family: Verdana;
+    margin-left: 10px;
+    cursor: default;
+    float: right;
+}
+
+.TopButton:hover {
+    background-color: #009d42;
+    color: #ffffff;
+}
+
+#header-btn-div {
+    padding-left: 0;
+    padding-right: 0;
+    justify-content: flex-end;
+    position: absolute;
+    right: 0px;
+}
+
+#header-user-avatar {
+    cursor: pointer;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    display: none;
+}
+
+#HintZone {
+    background-color: #e0e0e0;
+    padding: 16px 50px 16px 16px;
+}
+
+#HintClose {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    width: 16px;
+    height: 16px;
+    font-family: Arial;
+    font-size: 1rem;
+    line-height: 16px;
+    cursor: default;
+}
+
+#HintClose:hover {
+    color: #89cb23;
+}
+
+#ChatZone {
+    position: absolute;
+    width: 100%;
+    top: 40px;
+    bottom: 0px;
+}
+
+#MessageList {
+    background-color: white;
+    /*	border-bottom		: 1px solid #DCDEE4; */
+    position: absolute;
+    top: 301px;
+    z-index: 2;
+    bottom: 50px;
+    border-radius: 15px 15px 0px 0px;
+    border-top: 30px solid #ffffff;
+    width: 100%;
+    overflow: auto;
+    overflow-x: hidden;
+    padding: 6px 10px;
+    -webkit-overflow-scrolling: touch;
+}
+
+/* 可拖曳調整 bar */
+#ResizeBar {
+    position: absolute;
+    top: 302px;
+    left: 0;
+    right: 0;
+    height: 10px;
+    cursor: ns-resize;
+    z-index: 1000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* 增加觸摸區域 */
+    padding: 5px 0;
+    cursor: grab;
+}
+
+.resize-handle {
+    width: 40px;
+    height: 4px;
+    background-color: #ccc;
+    border-radius: 2px;
+    transition: background-color 0.2s ease;
+    /* 添加陰影效果 */
+    box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+}
+
+#ResizeBar:active .resize-handle,
+#ResizeBar.dragging .resize-handle {
+    background-color: #666;
+}
+
+/* 拖曳時防止文字選取 */
+.user-select-none {
+    user-select: none;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+}
+
+/* 隱藏 video 控制條 */
+#heygen-video {
+    /* 強制隱藏所有瀏覽器原生控制條 */
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+}
+
+#heygen-video::-webkit-media-controls {
+    display: none !important;
+}
+
+#heygen-video::-webkit-media-controls-panel {
+    display: none !important;
+}
+
+#heygen-video::-webkit-media-controls-play-button {
+    display: none !important;
+}
+
+#heygen-video::-webkit-media-controls-start-playback-button {
+    display: none !important;
+}
+
+#heygen-video::-webkit-media-controls-timeline {
+    display: none !important;
+}
+
+#heygen-video::-webkit-media-controls-current-time-display {
+    display: none !important;
+}
+
+#heygen-video::-webkit-media-controls-time-remaining-display {
+    display: none !important;
+}
+
+#heygen-video::-webkit-media-controls-mute-button {
+    display: none !important;
+}
+
+#heygen-video::-webkit-media-controls-volume-slider {
+    display: none !important;
+}
+
+#heygen-video::-webkit-media-controls-fullscreen-button {
+    display: none !important;
+}
+
+#heygen-video::-webkit-media-controls-toggle-closed-captions-button {
+    display: none !important;
+}
+
+/* Firefox 控制條隱藏 */
+#heygen-video::-moz-media-controls {
+    display: none !important;
+}
+
+
+
+/* 監聽狀態的脈衝動畫 */
+@keyframes pulse-listening {
+    0% { 
+        background: rgba(76, 175, 80, 0.8);
+        transform: scale(1);
+    }
+    50% { 
+        background: rgba(76, 175, 80, 1);
+        transform: scale(1.05);
+    }
+    100% { 
+        background: rgba(76, 175, 80, 0.8);
+        transform: scale(1);
+    }
+}
+
+/* HeyGen 容器樣式 */
+#LeftZone-HeyGen-Full {
+    position: absolute;
+    top: 45px;
+    left: 0;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    z-index: 10;
+    background: #f5f5f5;
+}
+/* HeyGen 容器樣式 */
+#LeftZone-HeyGen-Half {
+    position: relative;
+    width: 100%;
+    height: 70%;
+    z-index: 1;
+}
+
+#ChatZone-Container {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: 0px 16px 16px 16px;
+}
+
+#Editor {
+    height: 100%;
+    width: 100%;
+    flex: auto;
+    display: inline-block;
+    outline: none;
+    text-indent: 5px;
+    padding: 16px 0px 16px 16px ;
+    border: none;
+    resize: none;   
+    border-radius: inherit; 
+}
+
+.EditorZone {
+    position: absolute;
+    width: 100%;
+    height: 125px;
+    bottom: 0px;
+    z-index: 2;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    border-radius: 0px 0px 8px 8px;
+}
+#disConnectOverlay {
+    display: none;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    bottom: 0px;
+    background: rgba(255, 255, 255, 0.5);
+    z-index: 1100; 
+}
+
+.LeftButtonZone {
+    position: absolute;
+}
+
+.RightButtonZone {
+    position: absolute;
+    right: 0px;
+}
+
+.LeftButtonZone>div {
+    float: left;
+    margin-left: 10px;
+}
+
+.RightButtonZone>div {
+    float: right;
+    margin-right: 10px;
+}
+
+.Button {
+    border: 0px solid #cfcfcf;
+    background-image: linear-gradient(top, #fdfdfd, #e2e2e2);
+    background-image: -ms-linear-gradient(top, #fdfdfd, #e2e2e2);
+    background-image: -moz-linear-gradient(top, #fdfdfd, #e2e2e2);
+    background-image: -webkit-linear-gradient(top, #fdfdfd, #e2e2e2);
+    height: 28px;
+    line-height: 26px;
+    border-radius: 3px;
+    text-align: center;
+    vertical-align: top;
+    cursor: default;
+    padding-right: 27px;
+    display: inline-block;
+}
+
+.IconButton {
+    display: inline-block;
+    height: 22px;
+    width: 22px;
+    margin-top: 0px;
+    vertical-align: middle;
+    cursor: pointer;
+    -webkit-mask-size: cover;
+    margin-left: 0px;
+}
+
+.IconButton>div {
+    width: 100%;
+    height: 100%;
+    background-repeat: no-repeat;
+    background-position: center center;
+}
+
+.ButtonDisabled>div {
+    opacity: 0.5;
+}
+
+.button-col {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    justify-content: end;
+    padding: 0px 16px 16px 0px;
+    gap: 10px;
+  }
+.SendButtonDisabled {
+    background: #cacaca !important;
+    border: 2px solid #cacaca !important;
+    cursor: default !important;
+}
+
+#SendButton {
+    /* margin-left: 5px; */
+}
+
+.Button:hover {
+    background-image: linear-gradient(top, #f9f9f9, #eeeeee);
+    background-image: -ms-linear-gradient(top, #f9f9f9, #eeeeee);
+    background-image: -moz-linear-gradient(top, #f9f9f9, #eeeeee);
+    background-image: -webkit-linear-gradient(top, #f9f9f9, #eeeeee);
+    cursor: pointer;
+}
+
+.Button:active {
+    background-image: linear-gradient(top, #e2e2e2, #fdfdfd);
+    background-image: -ms-linear-gradient(top, #e2e2e2, #fdfdfd);
+    background-image: -moz-linear-gradient(top, #e2e2e2, #fdfdfd);
+    background-image: -webkit-linear-gradient(top, #e2e2e2, #fdfdfd);
+}
+
+.ButtonDisabled {
+    background-image: none !important;
+    cursor: default !important;
+    display: none !important;
+}
+
+.ChatSystemMessage {
+    width: 100%;
+    text-align: center;
+    color: #999999;
+    margin: 5px 0px;
+    font-size: 0.4642857rem;
+    word-break: break-all;
+}
+
+/*-- Chat AD Message --*/
+
+.ActivityMessage {
+    text-align: center;
+    margin: 5px auto;
+    background-color: #fff4e8;
+    border: 1px solid #ffd0c0;
+    border-radius: 6px;
+    padding: 6px;
+}
+
+.ActivityMessage img {
+    width: 100%;
+    border: 1px solid #ffe8d8;
+}
+
+.TextActivityMessage {
+    width: 100%;
+    margin: 0px auto;
+    text-align: center;
+}
+
+.TextActivityMessage img {
+    width: 100%;
+}
+
+.ActivityMessage div,
+.TextActivityMessage div {
+    text-align: center;
+}
+
+.Advertisement {
+    width: 100%;
+    margin: 0px auto;
+    text-align: center;
+}
+
+.Advertisement img {
+    /* max-height: calc(100vh - 75vh); */
+    max-width: 95%;
+}
+
+.Advertisement div {
+    text-align: center;
+}
+
+/*-- Normal Chat Message --*/
+
+.ChatMessage {
+    position: relative;
+    width: 100%;
+    display: inline-block;
+    margin: 15px 0px;
+    animation: appendMessage 0.5s alternate;
+}
+
+.ChatMessageLeft {
+    padding-left: 0px;
+    display: grid;
+    gap: 6px;
+    width: fit-content;
+}
+
+.ChatMessageRight {
+    display: flex;
+    flex-direction: row-reverse;
+    gap: 6px;
+    padding: 0px 0px 0px 15px;
+    text-align: right;
+}
+
+.ChatMessageContent {
+    text-align: left;
+}
+
+.ChatMessageAvatar {
+    display: none;
+    background-color: #ffffff;
+    position: absolute;
+    top: 0px;
+    width: 42px;
+    height: 42px;
+    border: 1px solid #d0d0d0;
+    border-radius: 21px;
+    background-repeat: no-repeat;
+    background-position: center center;
+}
+
+/*大頭貼*/
+.ChatMessageAvatar img {
+    width: 42px;
+    height: 42px;
+    background-size: cover;
+    border-radius: 60px;
+    box-shadow: 0 1px 2px 1px rgba(220, 220, 220, 1);
+}
+
+.ChatMessageLeft .ChatMessageAvatar {
+    left: 0px;
+}
+
+.ChatMessageRight .ChatMessageAvatar {
+    right: 0px;
+}
+
+.ChatMessageAvatarRobot {
+    background-image: url(../image/qbichat.gif);
+    background-size: contain;
+}
+
+/*-- ChatMessageContent --*/
+
+.Inputing {
+    display: flex !important;
+    justify-content: flex-start;
+    align-items: center;
+}
+.StatusMessage {
+    color: #4a4a4a; /* 偏深灰色 */
+    overflow: hidden;
+    font-weight: bold;
+    position: relative;
+    width: 100%;
+    display: inline-block;
+    margin: 5px 0px;
+    left: 15px;
+    bottom: -15px;
+    letter-spacing: 1px;
+}
+.StatusMessage span {
+    display: inline-block;
+    animation: shine 0.9s infinite;
+    color: #4a4a4a;
+    font-weight: bold;
+}
+
+@keyframes shine {
+    0%, 100% {
+        color: #4a4a4a;
+        text-shadow: none;
+    }
+    50% {
+        color: #bdbdbd;
+        text-shadow: 0 0 8px rgba(255, 255, 255, 0.6);
+    }
+}
+
+
+
+
+.wave span {
+    display: inline-block;
+    font-size: 1em;
+    font-family: "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", sans-serif;
+}
+
+.wave .wave-content {
+    animation: wave 1s ease-in-out infinite;
+    animation-delay: calc(0.1s * var(--wave-item));
+}
+
+@keyframes wave {
+    0% {
+        transform: translateY(0);
+    }
+
+    20% {
+        transform: translateY(-10px);
+    }
+
+    50%,
+    100% {
+        transform: translateY(8px);
+    }
+}
+
+.ChatMessageContent {
+    border-radius: 6px;
+    display: inline-block;
+}
+
+.ChatMessageLeft .ChatMessageContent {
+    border-radius: 0 10px 10px 10px;
+    box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.25);
+    border: 1px solid #f1f0f0;
+    background-color: #f1f0f0;
+}
+
+.ChatMessageLeft .ChatMessageContent:hover {
+    border: 1px solid #ececec;
+    background-color: #ececec;
+}
+
+.ChatMessageRight .ChatMessageContent {
+    border-radius: 10px 0 10px 10px;
+    box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.35);
+    border: 1px solid #67d5ff;
+    background-color: #67d5ff;
+    vertical-align: top;
+}
+
+.ChatMessageRight .ChatMessageContent:hover {
+    border-radius: 10px 0 10px 10px;
+    box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.35);
+    border: 1px solid #7ddbff;
+    background-color: #7ddbff;
+    vertical-align: top;
+}
+
+/*-- ChatMessageTextContent --*/
+
+.ChatMessageTextContent {
+    padding: 5px;
+    min-width: 20px;
+    margin-top: 5px;
+    text-align: left;
+    word-wrap: break-word;
+}
+
+.ChatMessageTextContent a {
+    word-wrap: break-word;
+    cursor: pointer;
+    word-break: break-all;
+}
+
+/*20160706 表情符號*/
+.ChatMessageTextContent .emoji {
+    max-width: 24px;
+    max-height: 24px;
+}
+
+.ChatMessageIcon {
+    display: none;
+}
+
+.ChatMessageFailed .ChatMessageIcon {
+    background-image: url(../image/MessageSendFailed.png);
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    vertical-align: top;
+    margin: 13px 6px 6px 0px;
+    cursor: pointer;
+}
+
+.gptMessage {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.ChatMessageTime {
+    color: black;
+    font-family: Verdana, Arial;
+    font-size: 0.428571rem;
+    padding-top: 2px;
+}
+.ChatMessageRight .ChatMessageTime {
+    display: flex;
+    align-items: end;
+}
+
+.ChatMessageGptSatisBar {
+    display: flex;
+    flex-direction: row-reverse;
+    grid-area: 2 / 1;
+    padding: 0 5px;
+    gap: 10px;
+}
+
+.ChatMessageGptSatisDislike {
+    background-image: url(../image/01/ChatMessageGptSatisDislike.svg);
+    float: right;
+}
+
+.ChatMessageGptSatisOK {
+    background-image: url(../image/01/ChatMessageGptSatisOK.svg);
+    float: right;
+}
+
+.ChatMessageGptSatisLike {
+    background-image: url(../image/01/ChatMessageGptSatisLike.svg);
+    float: right;
+}
+
+.clicked {
+    font-size: 0.628571rem;
+}
+
+.ChatMessageGptSatisDislike_clicked {
+    background-image: url(../image/01/ChatMessageGptSatisDislike_clicked.svg);
+    float: right;
+}
+
+.ChatMessageGptSatisOK_clicked {
+    background-image: url(../image/01/ChatMessageGptSatisOK_clicked.svg);
+    float: right;
+}
+
+.ChatMessageGptSatisLike_clicked {
+    background-image: url(../image/01/ChatMessageGptSatisLike_clicked.svg);
+    float: right;
+}
+
+.ChatMessageLink {
+    color: #0050a0;
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+/*-- ChatMessageFileContent --*/
+
+.ChatMessageFileContent {
+    width: 260px;
+    line-height: 20px;
+}
+
+.ChatMessageFileContentTop {
+    border-bottom: 1px solid #d3d3d3;
+    position: relative;
+    padding: 6px 6px 4px 50px;
+}
+
+.ChatMessageFileContentBottom {
+    padding: 3px 10px;
+    text-align: right;
+}
+
+.ChatMessageFileContentIcon {
+    position: absolute;
+    width: 32px;
+    height: 32px;
+    left: 10px;
+    top: 9px;
+    background-image: url(../image/FileTypeUnknown.png);
+}
+
+.ChatMessageFileContentIconExcel {
+    background-image: url(../image/FileTypeExcel.png);
+}
+
+.ChatMessageFileContentIconExe {
+    background-image: url(../image/FileTypeExe.png);
+}
+
+.ChatMessageFileContentIconImage {
+    background-image: url(../image/FileTypeImage.png);
+}
+
+.ChatMessageFileContentIconPpt {
+    background-image: url(../image/FileTypePpt.png);
+}
+
+.ChatMessageFileContentIconText {
+    background-image: url(../image/FileTypeText.png);
+}
+
+.ChatMessageFileContentIconWord {
+    background-image: url(../image/FileTypeWord.png);
+}
+
+.ChatMessageFileContentIconZip {
+    background-image: url(../image/FileTypeZip.png);
+}
+
+.ChatMessageFileContentName {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.ChatMessageFileContentInfo {
+    color: #808080;
+}
+
+.ChatMessageFileContentStatus {
+    padding-left: 16px;
+}
+
+/*-- ChatMessageImageContent --*/
+
+.ChatMessageImageContent {
+    line-height: 0px;
+}
+
+.ChatMessageImageContent img {
+    border: 1px solid #eeeeee;
+    max-width: 300px;
+    border-radius: 10px;
+    width: 100%;
+}
+
+.ChatMessageImageContentMask {
+    width: 100%;
+    height: 100%;
+}
+
+/*-- ChatMessageStickerContent --*/
+
+.ChatMessageStickerContent {
+    padding: 6px;
+    line-height: 0px;
+    max-width: 70%;
+}
+
+.ChatMessageStickerContent img {
+    max-width: 80px;
+    max-height: 80px;
+}
+
+.ChatMessageStickerContentMask {
+    width: 100%;
+    height: 100%;
+}
+
+/* for jQuery UI */
+
+.ui-button {
+    outline: none;
+}
+
+/* for dialogs */
+
+.DialogContent {
+    font-size: 0.5rem;
+}
+
+.DialogInfo {
+    padding-bottom: 10px;
+}
+
+/*Ext Web*/
+#ifExtWeb {
+    width: 100%;
+    height: 100%;
+    border: 0px;
+}
+
+/*Ext P4 Web Page*/
+#dvP4Page {
+    background-color: white;
+    display: none;
+    top: 15%;
+    bottom: 0px;
+    right: 0px;
+    margin: 2px;
+    /* margin: 0px 0px 0px 0px; */
+    padding: 2px;
+    position: absolute;
+    z-index: 1000;
+    -webkit-box-shadow: 0 3px 9px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 3px 9px rgba(0, 0, 0, 0.5);
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    border-radius: 1rem;
+    width: 100%;
+}
+
+#ifP4Url {
+    border: 0px;
+    display: block;
+    width: 100%;
+    height: 92%;
+    /*
+    width: 98%;
+    height: 95%;
+    -webkit-transform: scale(0.25);
+    */
+    -webkit-transform-origin: 0 0;
+    margin: 0 auto;
+    border-radius: 1rem;
+    margin-top: 1.7rem
+}
+
+#btnP4PageClose {
+    color: black;
+    cursor: pointer;
+    width: 15px;
+    height: 20px;
+    top: 0.3rem;
+    position: absolute;
+    right: 1.5rem;
+}
+
+#btnP4PageClose img {
+    width: 1rem;
+}
+
+#btnP4PageZoomIn {
+    color: black;
+    cursor: pointer;
+    width: 15px;
+    height: 20px;
+    top: 0.5rem;
+    position: absolute;
+    right: 3rem;
+}
+
+#btnP4PageMinimum {
+    color: black;
+    cursor: pointer;
+    width: 15px;
+    height: 20px;
+    top: 0.5rem;
+    position: absolute;
+    right: 3rem;
+}
+
+#btnP4PageZoomIn img {
+    width: 1rem;
+}
+
+#btnP4PageMinimum img {
+    width: 1rem;
+}
+
+/*bootstrap*/
+.navbar {
+    min-height: 40px !important;
+    margin-bottom: 0px !important;
+    height: 45px;
+}
+
+.navbar-brand {
+    height: 40px !important;
+    padding: 6px 5px !important;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    /* width: 98%;
+  max-width: 200px; */
+}
+
+.navbar-toggle {
+    padding: 4px 7px !important;
+}
+
+@media (min-width: 800px) {
+    .navbar-nav>li>a {
+        padding-top: 10px !important;
+        padding-bottom: 10px !important;
+    }
+}
+
+@media (min-width: 768px) {
+    .navbar-brand {
+        margin-left: 5px !important;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
+    }
+}
+
+.service_con_box {
+    background-color: #f0f0f0;
+    padding-top: 20px;
+    padding-bottom: 10px;
+    width: 100%;
+}
+
+.service_con_box {
+    background-color: #f0f0f0;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    width: 100%;
+}
+
+.service_con_box02 {
+    padding-top: 10px;
+    padding-left: 30px !important;
+    padding-right: 30px !important;
+    padding-bottom: 10px;
+    width: 100%;
+}
+
+.col-md-6 {
+    width: 100% !important;
+    height: 100% !important;
+}
+
+.service_list02 p {
+    margin: 0px !important;
+}
+
+.step_box {
+    width: 100%;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.step_line {
+    width: 85%;
+    margin-left: auto;
+    margin-right: auto;
+    bottom: 20px;
+    height: 9px;
+    border: 1px solid #e1e1e1;
+    background-color: #ffffff;
+}
+
+.step_font_up_box {
+    width: 85%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* joanne 2017-11-17 服請狀態*/
+.step_font02 {
+    width: auto;
+    position: relative;
+    float: left;
+    margin-bottom: 15px;
+    margin-top: 10px;
+    left: 14%;
+}
+
+/* joanne 2017-11-17 服請狀態*/
+.step_font04 {
+    width: auto;
+    position: relative;
+    float: left;
+    margin-bottom: 15px;
+    margin-top: 10px;
+    left: 36%;
+}
+
+/* joanne 2017-11-17 服請狀態*/
+.step_font06 {
+    width: auto;
+    position: relative;
+    float: right;
+    margin-top: 10px;
+    right: -9px;
+}
+
+.step_font_down_box {
+    width: 85%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* joanne 2017-11-17 服請狀態*/
+.step_font01 {
+    width: auto;
+    position: relative;
+    float: left;
+    margin-top: 5px;
+    left: -13px;
+}
+
+/* joanne 2017-11-17 服請狀態*/
+.step_font03 {
+    width: auto;
+    position: relative;
+    float: left;
+    margin-top: 5px;
+    left: 18%;
+}
+
+/* joanne 2017-11-17 服請狀態*/
+.step_font05 {
+    width: auto;
+    position: relative;
+    float: left;
+    margin-top: 5px;
+    left: 37%;
+}
+
+.step_circle {
+    width: 23px;
+    height: 23px;
+    border-radius: 60px;
+    background-color: #ffffff;
+    background-repeat: no-repeat;
+    border: 3px solid #c5c5c5;
+    top: -8px;
+    position: relative;
+    float: left;
+}
+
+/* joanne 2017-11-17 服請狀態*/
+.step_circle01 {
+    left: -2px;
+}
+
+.step_circle02 {
+    left: 9%;
+}
+
+.step_circle03 {
+    left: 19%;
+}
+
+.step_circle04 {
+    left: 30%;
+}
+
+.step_circle05 {
+    left: 41%;
+}
+
+.step_circle06 {
+    float: right !important;
+}
+
+.step_line .active {
+    background-color: #ec6941 !important;
+    border: none !important;
+}
+
+.chat_pop_btn {
+    right: 10px;
+    bottom: 53px;
+    width: 60px;
+    height: 60px;
+    background-color: #eacd3dcf;
+    border-radius: 60px;
+    position: absolute;
+    cursor: pointer;
+}
+
+.chat_icon {
+    width: 45px;
+    height: 40px;
+    margin-left: 9px;
+    margin-top: 10px;
+    display: inline-block;
+    background-image: url(../image/IVR.png);
+}
+
+.closepannel {
+    width: 20px;
+    height: 20px;
+    display: inline-block;
+    background-color: #ffffff;
+    float: right;
+    cursor: pointer;
+    z-index: 1000;
+    background-size: contain;
+}
+
+.Satisfypannel {
+    width: 14px;
+    height: 14px;
+    display: inline-block;
+    float: right;
+    background-repeat: no-repeat;
+    cursor: pointer;
+    z-index: 1000;
+    background-size: contain;
+}
+
+.prev {
+    display: inline-block;
+    float: left;
+    font-size: 0.642857rem;
+    cursor: pointer;
+}
+
+.GenerateText{
+    color:rgb(234, 107, 102);
+    font-size: small;
+}
+
+.gPTWordingDiv{
+    display: inline-block;
+    width:100%;
+}
+
+.messagetitle{
+    color:rgb(0, 99, 176);
+}
+.sourceBox{
+    padding-top: 10px;
+}
+
+/* joanne 2018-01-09 swiper */
+.swiper {
+    /* max-width: 600px; */
+    width: 100%;
+    display: inherit;
+}
+
+.listSlide {
+    border: 1px solid #d1d1d1 !important;
+    border-radius: 10px;
+    min-width: 47% !important;
+    width: 240px !important;
+}
+
+.GptRelated {
+    border: rgb(185, 205, 229) solid;
+    background-color: rgb(255, 255, 255);
+    color: rgb(35, 82, 124);
+    border-radius: 8px;
+    padding: 5px;
+    text-align: left;
+    word-wrap: break-word;
+    display: inline-block;
+    margin: 5px;
+    cursor: pointer;
+    border-width: thin;
+    transition: background-color 0.1s;
+}
+
+.GptRelated:hover {
+    background-color: rgb(187, 218, 255);
+    -webkit-transition: background-color 100ms linear;
+    -ms-transition: background-color 100ms linear;
+    transition: background-color 100ms linear;
+}
+
+.swiper_ul {
+    list-style: none;
+    text-align: center;
+    display: block;
+    padding: 0px;
+    margin: 0;
+    border-top: 1px solid #d1d1d1;
+}
+
+.swiper_ul>.swiper_li:last-child {
+    padding-bottom: 8px;
+}
+
+.swiper_ul>.swiper_li {
+    background-color: #fff;
+    display: block;
+    height: auto;
+    overflow: visible;
+    padding: 7px;
+    margin: 0;
+    color: #365899;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.swiper_ul>.swiper_li:last-child {
+    border-radius: 0px 0px 10px 10px;
+}
+
+.swiper_ul>.swiper_li:hover {
+    background-color: #d1d1d1;
+    color: #365899;
+    cursor: pointer;
+}
+
+.swiper_img {
+    position: relative;
+    min-height: 80px;
+}
+
+.swiper_img img {
+    width: 100%;
+    border-radius: 3px;
+    height: auto;
+    display: block;
+    border-radius: 10px 10px 0px 0px;
+}
+
+.swiper_title {
+    height: auto;
+    position: relative;
+    padding: 2px 8px 5px 8px;
+    word-break: break-word;
+}
+
+.swiper-button-next {
+    background-repeat: no-repeat;
+    background-size: 100% auto;
+    background-position: center;
+}
+
+.swiper-button-next::after {
+    display: none;
+}
+
+.swiper-button-prev {
+    background-repeat: no-repeat;
+    background-size: 100% auto;
+    background-position: center;
+}
+
+.swiper-button-prev::after {
+    display: none;
+}
+
+.swiper-button-disabled {
+    display: none;
+}
+
+.richMenuButton {
+    display: inline-block;
+    text-align: center;
+    position: absolute;
+    padding: 8px;
+    border: none;
+    width: 100%;
+    cursor: pointer;
+    left: 0;
+    z-index: -1;
+}
+
+.richMenuButton.menu-open:after {
+    position: absolute;
+    top: 50%;
+    margin-left: 0.3rem;
+    margin-top: -0.42rem;
+    content: "";
+    display: inline-block;
+    width: 0;
+    height: 0;
+    border: 0.3rem solid transparent;
+    /* 修復 RichMenu 收合鍵樣式不一致問題 */
+    border-bottom-color: inherit;
+}
+
+.richMenuButton.menu-close:after {
+    position: absolute;
+    top: 50%;
+    margin-left: 0.3rem;
+    margin-top: -0.12rem;
+    content: "";
+    display: inline-block;
+    width: 0;
+    height: 0;
+    border: 0.3rem solid transparent;
+    /* 修復 RichMenu 收合鍵樣式不一致問題 */
+    border-top-color: inherit;
+}
+.LanguageMenuButton {
+    position: absolute;
+}
+
+.LanguageMenuButton.menu-close:after {
+    position: absolute;
+    top: 8px;
+    left:23px;
+    content: "";
+    width: 0;
+    height: 0;
+    border: 0.16rem solid transparent;
+    /* 修復 RichMenu 收合鍵樣式不一致問題 */
+    border-top-color: inherit;
+}
+
+#RestartChatButton {
+    color: white;
+    text-align: center;
+    padding: 14px;
+    cursor: pointer;
+}
+
+.RichMenuPannel {
+    position: absolute;
+    bottom: 45px;
+    display: none;
+    z-index: 2;
+}
+
+.RichMenuZone {
+    position: absolute;
+    width: 100%;
+    height: 50px;
+    padding: 5px;
+    bottom: 0px;
+    z-index: 2;
+}
+
+.cardsTitle {
+    font-weight: bold;
+    padding: 5px 8px;
+    word-wrap: break-word;
+}
+
+.videoIframe {
+    max-width: 300px;
+    width: 300px;
+    border-radius: 10px;
+}
+
+.divCenter {
+    display: flex;
+    justify-content: center;
+    margin: 10px 0;
+}
+
+.cardsSlide {
+    border: 1px solid #d1d1d1 !important;
+    border-radius: 10px;
+    width: 240px !important;
+}
+
+.cardImage {
+    border-radius: 10px 10px 0px 0px;
+    height: 160px;
+    width: 238px;
+}
+
+#webmakecallbtn {
+    font-size: 0.8214285rem;
+    color: #337ab7;
+    cursor: pointer;
+}
+
+#webmakecallbtn:active {
+    font-size: 0.75rem;
+}
+
+.webcallbox {
+    background-color: #fcfcfc;
+    position: relative;
+    z-index: 999;
+    height: 50px;
+    box-shadow: rgba(206, 206, 206, 1) 2px 2px 10px;
+}
+
+.webcallAi3icon {
+    position: relative;
+    float: left;
+    top: 10px;
+}
+
+.webcallAi3icon img {
+    height: 32px;
+}
+
+.webcallagentName {
+    display: inline-block;
+    margin-top: 13px;
+    margin-left: 13px;
+    font-size: 0.6428571rem;
+    font-weight: bold;
+}
+
+.webcallphone {
+    background-color: white;
+    height: 50px;
+    width: 60px;
+    float: right;
+    margin-right: -15px;
+}
+
+.webcallTime {
+    display: inline-block;
+    margin-left: 13px;
+}
+
+.webcallCancelPhone {
+    font-size: 0.8571428rem;
+    padding-left: 2px;
+    padding-top: 4px;
+    color: white;
+}
+
+/* 留言確認框 */
+.leaveMessageBox {
+    background-color: white;
+    border: 1px solid #f4f4f4;
+    border-radius: 5px;
+    min-width: 150px;
+    max-width: 250px;
+}
+
+.MessageBox {
+    gap: 0;
+    grid-area: 1 / 1;
+    padding: 4px;
+    box-sizing: border-box;
+}
+
+.ChatMessageLeft .NewChatMessageTime {
+    display: flex;
+    align-items: end;
+    grid-area: 1 / 2;
+    color: var(--FONT-normal, #000);
+    font-family: "SF Pro";
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 15px; /* 125% */
+}
+.ChatMessageLeft:has(.swiper-wrapper) .NewChatMessageTime {
+    grid-area: unset;
+    justify-content: end;
+    padding-right: 11px;
+}
+.ChatMessageRight .NewChatMessageTime {
+    display: flex;
+    align-items: end;
+    color: var(--FONT-normal, #000);
+    /* Text Font/B5.1_12 */
+    font-family: "SF Pro";
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 15px; /* 125% */
+}
+
+.leaveMessageBox .wording {
+    padding: 12px 10px;
+    border-bottom: 1px solid #f4f4f4;
+}
+
+.btnzone {
+    color: #365899;
+}
+
+.btn.true {
+    width: 50%;
+    float: left;
+}
+
+.btn.false {
+    width: 50%;
+}
+
+.btn.leave {
+    width: 100%;
+    float: left;
+}
+
+#ButtonZone {
+    display: none;
+    /* display: inline-block; */
+    padding-right: 5px;
+}
+
+/* p4 */
+#close-P4modal-btn {
+    color: #000 !important;
+    margin-top: -10px !important;
+}
+
+#ToolZone {
+    background: white;
+    z-index: 1;
+    position: absolute;
+    bottom: 125px;
+    width: 100%;
+    overflow-y: auto;
+    overflow-x: hidden;
+    min-height: 38px;
+    max-height: 85px;
+}
+
+.chat-logo {
+    width: 30px;
+    height: auto;
+}
+
+#reply {
+    width: 100%;
+    height: 200px;
+    color: #727272;
+    border-top: 1px solid #9cb4b6;
+    position: absolute;
+    bottom: 0px;
+    padding: 10px 65px 0px 10px;
+}
+
+#reply .txt {
+    width: 100%;
+}
+
+#LoginButton {
+    width: 15px;
+    height: 20px;
+    cursor: pointer;
+}
+
+.leave-chat {
+    width: 15px;
+    height: 20px;
+    cursor: pointer;
+    background-size: contain;
+}
+
+.leave-chat:hover {
+    width: 15px;
+    height: 20px;
+    cursor: pointer;
+    background-size: contain;
+}
+
+.dropdown-menu .divider {
+    height: 1.1px;
+    /* IE 使用 1px 會異常*/
+    margin: 9px 0;
+    overflow: hidden;
+}
+
+img.clickImg {
+    cursor: pointer;
+}
+
+#dropdown-menu {
+    animation: fadeIn 1s;
+}
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+#signModalBody .w94{
+    width: 94%;
+}
+
+#dropdown-menu>li>span {
+    position: relative;
+    display: block;
+    padding: 0px 15px;
+    cursor: pointer;
+}
+[lang="en_us"] #dropdown-menu>li>span {
+    padding: 0px 9px;
+}
+
+#fontsize-dropdown-menu {
+    animation: fadeIn 1s;
+}
+#fontsize-dropdown-menu>li>span {
+    position: relative;
+    display: block;
+    padding: 0px 15px;
+    cursor: pointer;
+}
+.fontsize-dropdown-menu .divider {
+    height: 1.1px;
+    /* IE 使用 1px 會異常*/
+    margin: 9px 0;
+    overflow: hidden;
+}
+
+.language-container{
+    min-width: 120px;
+    left: 20%;
+    right: 0px;
+}
+#language-dropdown-menu {
+    animation: fadeIn 1s;
+}
+#language-dropdown-menu>li>span {
+    position: relative;
+    display: block;
+    padding: 0px 15px;
+    cursor: pointer;
+}
+.language-dropdown-menu .divider {
+    height: 1.1px;
+    /* IE 使用 1px 會異常*/
+    margin: 9px 0;
+    overflow: hidden;
+}
+#fontsize-container {
+    display: flex !important;
+    align-items: center !important;
+}
+.flexAlignCenter {
+    display: flex !important;
+    align-items: center !important;
+}
+
+.ChatMessageSenderName {
+    font-weight: bold;
+}
+
+.Ellipsis {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.click-word {
+    color: #337ab7;
+    cursor: pointer;
+}
+
+#logoImage {
+    width: 30px;
+}
+
+@keyframes appendMessage {
+    0% {
+        bottom: -25px;
+        opacity: 0;
+    }
+
+    100% {
+        bottom: 0px;
+        opacity: 1;
+    }
+}
+
+#loading {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    z-index: 9999;
+    position: absolute;
+    background-color: azure;
+}
+
+#loading span {
+    color: orange;
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+/** 功能選單圖示 */
+#hamburger-menu {
+    width: 20px;
+    height: 18px;
+    cursor: pointer;
+}
+
+/** 字體大小按鈕 */
+#fontsize-menu {
+    width: 20px;
+    height: 16px;
+    cursor: pointer;
+    background: url(../image/01/fontSizeHelf.svg) no-repeat center center;
+    background-size: contain;
+}
+
+#fontsize-menu:hover {
+    background: url(../image/01/fontSizeHelf-hover.svg) no-repeat center center;
+    background-size: contain;
+}
+/** 多語系按鈕 */
+#language-menu {
+    width: 21px;
+    height: 20px;
+    margin-bottom: 0px;
+    margin-right:8px ;
+    cursor: pointer;
+    background-size: contain;
+}
+
+#header-btn-div div {
+    margin-left: 0.5rem;
+}
+
+#ExitButton {
+    margin-right: 0.3rem;
+    z-index: 1101;
+}
+
+#left-header {
+    /* margin-left: -15px; */
+    padding-left: 0px;
+    z-index: 2;
+}
+
+#otp-image {
+    width: 4rem;
+}
+
+#HotTopicList {
+    width: 100%;
+    height: 100%;
+    max-height: 10rem;
+}
+
+.divHorizontalCenter {
+    display: flex;
+    justify-content: center;
+}
+
+#openvidubtn {
+    font-size: 0.8214285rem;
+    color: #337ab7;
+    cursor: pointer;
+}
+
+.fontsize-btn {
+    font-size: 12px;
+    display: inline-block;
+    padding: 1px;
+    padding-left: 2.5px;
+    padding-right: 2.5px;
+}
+
+.fontsize-btn:hover {
+    background-color: rgb(104, 200, 238);
+}
+
+.fontsize-active {
+    background-color: rgb(104, 200, 238);
+}
+
+.card {
+    position: relative;
+    left: -10px;
+    text-align: center;
+}
+
+.card-title-helf {
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
+
+.card-title-full {
+    display: inline;
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
+
+.fontsize-menu-helf {
+    margin-left: 0rem;
+}
+.language-menu-helf {
+    cursor: pointer;
+}
+.WordBreakAll{
+    word-break: break-all;
+}
+
+/** 語言選單圖示 */
+#flag-icon-en {
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+  }
+#flag-icon-tc {
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+}
+#flag-icon-sc {
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+}
+#flag-icon-jp {
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+}
+#fontsize-menu-full {
+    cursor: pointer;
+    padding-right: 10px;
+    font-size: 14.5px;
+}
+.flex{
+    display: flex;
+}
+.flex-end{
+    justify-content: flex-end;
+}
+.flex-start{
+    justify-content: flex-start;
+}
+
+#i18n_zh_tw{
+    display: none;
+}
+#i18n_en_us{
+    display: none;
+}
+#i18n_ja_jp{
+    display: none;
+}
+#i18n_zh_cn{
+    display: none;
+}
+
+/* Streaming 訊息樣式 */
+.streaming-message {
+    background-color: #f8f9fa;
+    border-left: 3px solid #007bff;
+    padding: 10px 15px;
+    margin: 5px 0;
+    border-radius: 5px;
+    font-family: inherit;
+    line-height: 1.5;
+    animation: streaming-pulse 2s infinite;
+}
+
+.streaming-text {
+    background-color: #e9ecef;
+    padding: 8px 12px;
+    margin: 3px 0;
+    border-radius: 4px;
+    font-family: monospace;
+    font-size: 0.9em;
+    color: #495057;
+}
+
+.streaming-status {
+    background-color: #fff3cd;
+    border: 1px solid #ffeaa7;
+    color: #856404;
+    padding: 8px 12px;
+    margin: 5px 0;
+    border-radius: 4px;
+    font-size: 0.9em;
+    text-align: center;
+}
+
+/* Streaming 動畫效果 */
+@keyframes streaming-pulse {
+    0% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.8;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+/* 打字機效果 */
+.streaming-message.typing {
+    position: relative;
+}
+
+.streaming-message.typing::after {
+    content: '|';
+    animation: blink 1s infinite;
+    font-weight: bold;
+    color: #007bff;
+}
+
+@keyframes blink {
+    0%, 50% {
+        opacity: 1;
+    }
+    51%, 100% {
+        opacity: 0;
+    }
+}
+
+/* 響應式設計 */
+@media (max-width: 768px) {
+    /* HeyGen 相關響應式設計 - 手機版使用 Half 模式 */
+    #ChatZone {
+        right: unset !important;
+        border: unset !important;
+        border-radius: unset !important;
+        box-shadow: unset !important;
+        width: 100% !important;
+    }
+    
+    #ChatZone-Container {
+        margin: 0px !important;
+    }
+    
+    #heygen-video {
+        border-radius: unset !important;
+    }
+    
+    #toggle-chatzone-btn {
+        display: none !important;
+    }
+    
+    #ResizeBar {
+        display: flex !important;
+    }
+    
+    #MessageList {
+        /* 手機版 MessageList 樣式調整 */
+        top: 301px
+    }
+    
+    /* LeftZone-HeyGen 顯示控制 */
+    #LeftZone-HeyGen-Half {
+        display: flex !important;
+    }
+    
+    #LeftZone-HeyGen-Full {
+        display: none !important;
+    }
+    
+    .streaming-message {
+        padding: 8px 12px;
+        font-size: 0.9em;
+    }
+    
+    .streaming-text {
+        padding: 6px 10px;
+        font-size: 0.8em;
+    }
+    
+    .streaming-status {
+        padding: 6px 10px;
+        font-size: 0.8em;
+    }
+}
+
+/* 桌面版響應式設計 - 大螢幕使用 Full 模式 */
+@media (min-width: 768px) {
+    /* 非 iframe 模式的桌面版樣式 */
+    body:not(.iframe-mode) #ChatZone {
+        position: absolute;
+        right: 0px !important;
+        width: 30% !important;
+        border-radius: 8px 8px 8px 8px !important;
+        box-shadow: 1px 0 6px 0 rgba(0, 0, 0, 0.25) !important;
+    }
+    
+    body:not(.iframe-mode) #ChatZone-Container {
+        margin: 0px 16px 16px 16px !important;
+    }
+    
+    body:not(.iframe-mode) #toggle-chatzone-btn {
+        display: block !important;
+    }
+    
+    body:not(.iframe-mode) #ResizeBar {
+        display: none !important;
+        border-radius: 10px;
+    }
+    
+    body:not(.iframe-mode) #MessageList {
+        top: 0px !important;
+    }
+    
+    /* LeftZone-HeyGen 顯示控制 */
+    body:not(.iframe-mode) #LeftZone-HeyGen-Full {
+        display: block !important;
+    }
+    
+    body:not(.iframe-mode) #LeftZone-HeyGen-Half {
+        display: none !important;
+    }
+}
+
+/* iframe 模式響應式設計 - 始終使用 Half 模式 */
+.iframe-mode #ChatZone {
+    right: unset !important;
+    border: unset !important;
+    border-radius: unset !important;
+    box-shadow: unset !important;
+    width: 100% !important;
+}
+
+.iframe-mode #ChatZone-Container {
+    margin: 0px !important;
+}
+
+.iframe-mode #heygen-video {
+    border-radius: unset !important;
+}
+
+.iframe-mode #toggle-chatzone-btn {
+    display: none !important;
+}
+
+.iframe-mode #ResizeBar {
+    display: flex !important;
+}
+
+.iframe-mode #LeftZone-HeyGen-Half {
+    display: block !important;
+}
+
+.iframe-mode #LeftZone-HeyGen-Full {
+    display: none !important;
+}
+
+
+@keyframes ai-loading-spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+@keyframes ai-loading-dots {
+    0%, 20% { opacity: 0; }
+    50% { opacity: 1; }
+    100% { opacity: 0; }
+}
+
+#ai-loading-overlay {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: rgb(245, 245, 245);
+    box-shadow: rgba(0, 0, 0, 0.25) 1px 0px 6px 0px;
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    font-family: 'Microsoft JhengHei', sans-serif;
+}
+.overlay-content {
+    width: 60px;
+    height: 60px;
+    border: 4px solid #f3f3f3;
+    border-top: 4px solid #2196F3;
+    border-radius: 50%;
+    animation: ai-loading-spin 1s linear infinite;
+    margin: 0 auto;
+}
+#heygen-controls {
+    position: absolute;
+    right: 0;
+    padding: 10px;
+    gap: 8px;
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.heygen-control-top {
+    display: flex;
+    justify-content: end;
+}
+.heygen-control-bottom {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+}
+.heygen-control-btn{
+    width: 34px;
+    border-radius: 40px;
+    border: none;
+    height: 34px;
+}
+
+.heygen-control-btn-mic{
+    background-image: url(../image/mic-close.svg);
+}
+.heygen-control-btn-mic.active {
+    background-image: url(../image/mic-open.svg);
+}
+
+.heygen-control-btn-voice{
+    background-image: url(../image/voice-open.svg);
+}
+.heygen-control-btn-voice.muted {
+    background-image: url(../image/voice-close.svg);
+}
+
+.heygen-control-btn-chatzone.active {
+    background-image: url(../image/chatZone-close.svg);
+}
+
+.heygen-control-btn-chatzone {
+    background-image: url(../image/chatZone-open.svg);
+}
+
+/* 聲音提醒訊息樣式 - 橘底黑字 */
+.sound-reminder-tooltip {
+    position: absolute;
+    bottom: 53px;
+    right: 5px;
+    z-index: 1000;
+    animation: soundReminderBounce 2s ease-in-out infinite;
+}
+
+.sound-reminder-content {
+    background-color: #FFEAC7;
+    color: #000000;
+    padding: 8px 12px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 500;
+    white-space: nowrap;
+    box-shadow: 0 4px 12px rgba(255, 234, 199, 0.6);
+    position: relative;
+    font-family: 'Microsoft JhengHei', sans-serif;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.sound-reminder-arrow {
+    position: absolute;
+    bottom: -6px;
+    right: 15px;
+    width: 0;
+    height: 0;
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    border-top: 6px solid #FFEAC7;
+}
+
+/* 動畫效果 */
+@keyframes soundReminderBounce {
+    0%, 20%, 50%, 80%, 100% {
+        transform: translateY(0) scale(1);
+    }
+    10% {
+        transform: translateY(-3px) scale(1.05);
+    }
+    40% {
+        transform: translateY(-2px) scale(1.02);
+    }
+    60% {
+        transform: translateY(-1px) scale(1.01);
+    }
+}
+
+@keyframes soundReminderFadeOut {
+    0% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+    100% {
+        opacity: 0;
+        transform: translateY(-10px) scale(0.9);
+    }
+}
+
+.sound-reminder-fade-out {
+    animation: soundReminderFadeOut 0.3s ease-out forwards;
+}
+
+/* 響應式調整 */
+@media (max-width: 768px) {
+    .sound-reminder-content {
+        font-size: 12px;
+        padding: 6px 10px;
+    }
+}
+
+
+
+
+

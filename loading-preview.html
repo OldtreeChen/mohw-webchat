@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <title>WebChat</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=0" />
+
+    <!-- 原本的 CSS（從 HAR 提取） -->
+    <link rel="stylesheet" type="text/css" href="./lib/Bootstrap/css/bootstrap.css" />
+    <link rel="stylesheet" type="text/css" href="./styles/WebChat.css" />
+    <link rel="stylesheet" type="text/css" href="./styles/Contact.css" />
+
+    <!-- ★ 新增：Loading 樣式（獨立檔案，不改既有程式） -->
+    <link rel="stylesheet" type="text/css" href="./styles/Loading.css" />
+</head>
+
+<body id="AI3-WebChat" class="I18Content">
+    <div id="disConnectOverlay"></div>
+
+    <!-- 原本就存在的 #loading（內容不動） -->
+    <div id="loading">
+        <div>
+            <img src="./image/loading.gif">
+            <br>
+            <span> Loading... </span>
+        </div>
+    </div>
+
+    <!-- 原本的頁面結構 -->
+    <div id="LeftZone">
+        <div id="left-header" class="navbar container flexAlignCenter bg-color" draggable="true">
+            <div class="col-xs-8 col-md-9 flexAlignCenter" id="header-info-div" style="padding-right:0">
+                <div id="logo" class="chat-logo" style="display: none;">
+                    <img id="logoImage" alt="logo" src="./image/logo.png">
+                </div>
+                <h1 class="navbar-brand font-color"><span id="nvbarTitle">長照AI智慧助理</span></h1>
+            </div>
+            <div class="flexAlignCenter" id="header-btn-div">
+                <div id="ExitButton" tabindex="0" title="關閉" class="leave-chat icon-color"></div>
+            </div>
+        </div>
+
+        <div id="ChatZone-Container">
+            <div id="ChatZone">
+                <!-- HeyGen 虛擬人區域 -->
+                <div id="LeftZone-HeyGen-Half" class="heygen-zone heygen-half-mode" style="display:flex; justify-content:center; align-items:center; background:#1a1a2e; min-height:300px;">
+                    <div style="text-align:center; color:#fff;">
+                        <div style="width:120px; height:120px; border-radius:50%; background:radial-gradient(circle,#5dade2,#2e86c1); margin:0 auto 1rem; display:flex; justify-content:center; align-items:center; font-size:3rem; animation: avatarPulse 2s infinite ease-in-out;">���</div>
+                        <p style="color:#aed6f1;">虛擬人已連線</p>
+                    </div>
+                </div>
+                <div id="MessageList" style="min-height: 200px; padding: 16px;">
+                    <div class="message" style="background:#f0f0f0; border-radius:12px; padding:12px; margin:8px 0; max-width:80%;">
+                        您好！我是長照AI智慧助理，請問有什麼可以幫您的嗎？
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="EditorZone" class="EditorZone bg-color" style="padding:8px;">
+            <textarea id="Editor" type="text" placeholder="請輸入訊息..." style="width:100%; border:1px solid #ddd; border-radius:8px; padding:8px; resize:none; height:40px;"></textarea>
+        </div>
+    </div>
+
+    <!-- ★ 新增：Loading.js（獨立檔案，替換 #loading 內容） -->
+    <script src="./lib/jquery.min.js"></script>
+    <script src="./common/Loading.js"></script>
+
+    <!-- 模擬原本 WebChat.js 初始化完成後移除 loading -->
+    <script>
+        // 模擬虛擬人載入完成（實際環境由 WebChat.js 呼叫 $("#loading").remove()）
+        setTimeout(function () {
+            var $loading = $("#loading");
+            $loading.addClass("fade-out");
+            setTimeout(function () {
+                $loading.remove();
+            }, 400);
+        }, 8000);
+    </script>
+
+    <style>
+        @keyframes avatarPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+    </style>
+</body>
+</html>
