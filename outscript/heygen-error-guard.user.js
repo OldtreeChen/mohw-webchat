@@ -17,7 +17,7 @@
 
   const RETRY_INTERVAL_MS = 3000;
   const MAX_RETRIES = 5;
-  const POLL_MS = 200;
+  const POLL_MS = 100;
   const POLL_TIMEOUT_MS = 30000;
 
   const State = {
@@ -26,6 +26,8 @@
     retryTimerId: null,
     wasRecording: false,
   };
+
+  let hideTimerId = null;
 
   // ============ Overlay DOM & CSS ============
 
@@ -113,7 +115,7 @@
     overlay.style.transition = 'opacity 300ms';
     overlay.style.opacity = '0';
     overlay.style.display = 'flex';
-    requestAnimationFrame(() => { overlay.style.opacity = '1'; });
+    requestAnimationFrame(() => requestAnimationFrame(() => { overlay.style.opacity = '1'; }));
   }
 
   function hideOverlay() {
@@ -121,7 +123,7 @@
     if (!overlay) return;
     overlay.style.transition = 'opacity 300ms';
     overlay.style.opacity = '0';
-    setTimeout(() => {
+    hideTimerId = setTimeout(() => {
       overlay.style.display = 'none';
       // 重置回「重試中」的預設內容，供下次使用
       const box = overlay.querySelector('.heg-err-box');
@@ -142,6 +144,7 @@
   }
 
   function showFatalOverlay() {
+    if (hideTimerId) { clearTimeout(hideTimerId); hideTimerId = null; }
     const overlay = document.getElementById('heygen-error-overlay');
     if (!overlay) return;
     const box = overlay.querySelector('.heg-err-box');
@@ -217,6 +220,11 @@
           try { await Avatar.stopConversation(); } catch (e) { /* ignore */ }
         }
         // 呼叫原始（未 patch）的 createDirectSession，避免觸發 patch 造成遞迴
+        if (!ErrorGuard._origCreateDirectSession) {
+          console.error('[HeyGenErrorGuard] _origCreateDirectSession not set — aborting retry');
+          showFatalOverlay();
+          return;
+        }
         await ErrorGuard._origCreateDirectSession.call(Avatar);
 
         // 重連成功
