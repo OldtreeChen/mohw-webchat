@@ -236,5 +236,66 @@
     }, RETRY_INTERVAL_MS);
   }
 
+  // ============ Monkey-patch ============
+
+  function patchMethods() {
+    if (typeof Avatar === 'undefined' || typeof WebChat === 'undefined') return false;
+    if (Avatar.__heygenErrorGuardPatched) return true; // 防重複 patch
+
+    console.log('[HeyGenErrorGuard] Patching Avatar and WebChat...');
+
+    // 儲存原始 createDirectSession（retry 時直接呼叫，跳過 patch 包裝）
+    ErrorGuard._origCreateDirectSession = Avatar.createDirectSession;
+
+    // 1. Avatar.initAvatar
+    const _origInit = Avatar.initAvatar;
+    Avatar.initAvatar = async function (...args) {
+      try { return await _origInit.apply(this, args); }
+      catch (err) { ErrorGuard.onError('initAvatar', err); throw err; }
+    };
+
+    // 2. Avatar.createDirectSession
+    const _origCreate = Avatar.createDirectSession;
+    Avatar.createDirectSession = async function (...args) {
+      try { return await _origCreate.apply(this, args); }
+      catch (err) { ErrorGuard.onError('createDirectSession', err); throw err; }
+    };
+
+    // 3. Avatar.speakDirectMode
+    const _origSpeak = Avatar.speakDirectMode;
+    Avatar.speakDirectMode = async function (...args) {
+      try { return await _origSpeak.apply(this, args); }
+      catch (err) { ErrorGuard.onError('speakDirectMode', err); throw err; }
+    };
+
+    // 4. WebChat.keepAliveHeyGen
+    const _origKeepAlive = WebChat.keepAliveHeyGen;
+    WebChat.keepAliveHeyGen = function (...args) {
+      try { return _origKeepAlive.apply(this, args); }
+      catch (err) { ErrorGuard.onError('keepAliveHeyGen', err); throw err; }
+    };
+
+    Avatar.__heygenErrorGuardPatched = true;
+
+    // Overlay 預先注入（等 #heygen-player 出現後嘗試，若尚未出現則稍後由 onError 注入）
+    injectOverlay();
+
+    console.log('[HeyGenErrorGuard] Patch complete ✅');
+    return true;
+  }
+
+  // ============ Init: polling 等待 Avatar/WebChat 就緒 ============
+
+  let pollElapsed = 0;
+  const pollTimer = setInterval(() => {
+    pollElapsed += POLL_MS;
+    if (patchMethods()) {
+      clearInterval(pollTimer);
+    } else if (pollElapsed >= POLL_TIMEOUT_MS) {
+      clearInterval(pollTimer);
+      console.warn('[HeyGenErrorGuard] Timed out waiting for Avatar/WebChat — not patched');
+    }
+  }, POLL_MS);
+
   console.log('[HeyGenErrorGuard] userscript loaded v1.0.0');
 })();
