@@ -105,5 +105,57 @@
     return true;
   }
 
+  // ============ Overlay show / hide ============
+
+  function showOverlay() {
+    const overlay = document.getElementById('heygen-error-overlay');
+    if (!overlay) return;
+    overlay.style.transition = 'opacity 300ms';
+    overlay.style.opacity = '0';
+    overlay.style.display = 'flex';
+    requestAnimationFrame(() => { overlay.style.opacity = '1'; });
+  }
+
+  function hideOverlay() {
+    const overlay = document.getElementById('heygen-error-overlay');
+    if (!overlay) return;
+    overlay.style.transition = 'opacity 300ms';
+    overlay.style.opacity = '0';
+    setTimeout(() => {
+      overlay.style.display = 'none';
+      // 重置回「重試中」的預設內容，供下次使用
+      const box = overlay.querySelector('.heg-err-box');
+      if (box) {
+        box.innerHTML = `
+          <div class="heg-err-icon">⚠️</div>
+          <div class="heg-err-title">系統忙碌中</div>
+          <div class="heg-err-subtitle" id="heg-err-subtitle">正在嘗試重新連線...</div>
+          <div class="heg-err-spinner" id="heg-err-spinner"></div>
+        `;
+      }
+    }, 300);
+  }
+
+  function updateSubtitle(text) {
+    const el = document.getElementById('heg-err-subtitle');
+    if (el) el.textContent = text;
+  }
+
+  function showFatalOverlay() {
+    const overlay = document.getElementById('heygen-error-overlay');
+    if (!overlay) return;
+    const box = overlay.querySelector('.heg-err-box');
+    if (box) {
+      box.innerHTML = `
+        <div class="heg-err-icon">⚠️</div>
+        <div class="heg-err-title">服務暫時無法使用</div>
+        <div class="heg-err-subtitle">請重新整理頁面</div>
+        <button class="heg-err-reload-btn" onclick="location.reload()">重新整理</button>
+      `;
+    }
+    overlay.style.opacity = '1';
+    overlay.style.display = 'flex';
+  }
+
   console.log('[HeyGenErrorGuard] userscript loaded v1.0.0');
 })();
