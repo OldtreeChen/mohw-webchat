@@ -27,5 +27,83 @@
     wasRecording: false,
   };
 
+  // ============ Overlay DOM & CSS ============
+
+  function injectOverlay() {
+    const player = document.getElementById('heygen-player');
+    if (!player) return false;
+
+    // 確保 player 為 relative 定位（overlay 用 absolute 疊上去）
+    player.style.position = 'relative';
+
+    // 防止重複注入
+    if (document.getElementById('heygen-error-overlay')) return true;
+
+    // 注入 CSS
+    const style = document.createElement('style');
+    style.id = 'heygen-error-guard-style';
+    style.textContent = `
+      #heygen-error-overlay {
+        display: none;
+        position: absolute;
+        top: 0; left: 0;
+        width: 100%; height: 100%;
+        background: rgba(0,0,0,0.65);
+        align-items: center;
+        justify-content: center;
+        z-index: 999;
+        flex-direction: column;
+      }
+      .heg-err-box {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+        color: #fff;
+        text-align: center;
+        padding: 24px 32px;
+        border-radius: 12px;
+        background: rgba(0,0,0,0.4);
+      }
+      .heg-err-icon { font-size: 2.4rem; }
+      .heg-err-title { font-size: 1.2rem; font-weight: bold; }
+      .heg-err-subtitle { font-size: 0.9rem; opacity: 0.85; }
+      .heg-err-spinner {
+        width: 32px; height: 32px;
+        border: 3px solid rgba(255,255,255,0.3);
+        border-top-color: #fff;
+        border-radius: 50%;
+        animation: heg-spin 0.8s linear infinite;
+      }
+      .heg-err-reload-btn {
+        margin-top: 8px;
+        padding: 8px 20px;
+        background: #fff;
+        color: #333;
+        border: none;
+        border-radius: 6px;
+        font-size: 0.95rem;
+        cursor: pointer;
+      }
+      .heg-err-reload-btn:hover { background: #eee; }
+      @keyframes heg-spin { to { transform: rotate(360deg); } }
+    `;
+    document.head.appendChild(style);
+
+    // 注入 Overlay DOM
+    const overlay = document.createElement('div');
+    overlay.id = 'heygen-error-overlay';
+    overlay.innerHTML = `
+      <div class="heg-err-box">
+        <div class="heg-err-icon">⚠️</div>
+        <div class="heg-err-title">系統忙碌中</div>
+        <div class="heg-err-subtitle" id="heg-err-subtitle">正在嘗試重新連線...</div>
+        <div class="heg-err-spinner" id="heg-err-spinner"></div>
+      </div>
+    `;
+    player.appendChild(overlay);
+    return true;
+  }
+
   console.log('[HeyGenErrorGuard] userscript loaded v1.0.0');
 })();
