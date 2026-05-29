@@ -109,3 +109,37 @@ C:\Claude\衛福部webchat\
 | No modification to any existing project file | ✅ |
 
 **Framework is production-ready for Phase 1 use.** Two follow-ups noted for Phase 2: (1) populate the text bubble by calling `handelSpeechAndTextSyncQueue` with the real text, (2) HeyGen Lite Mode integration for actual lip-sync.
+
+---
+
+# HeyGen Error Guard for LTC WebChat — Tampermonkey Userscript
+
+A single-file userscript that detects HeyGen virtual assistant service errors, shows a "system busy" overlay over the avatar player, stops STT microphone recording, and auto-retries the connection every 3 seconds up to 5 times.
+
+**Zero modification** to the host site — everything is runtime monkey-patching + DOM injection.
+
+## Install
+
+1. Install [Tampermonkey](https://www.tampermonkey.net/) (Chrome, Edge, Firefox).
+2. Open Tampermonkey dashboard → Utilities → Import from file → pick `heygen-error-guard.user.js`.
+
+The script auto-activates on the same URLs as the Azure TTS script.
+
+## How it works
+
+Monkey-patches four methods after polling for `Avatar`/`WebChat` to be ready:
+
+| Method | Error caught |
+|--------|-------------|
+| `Avatar.initAvatar` | 初始化失敗 |
+| `Avatar.createDirectSession` | Session 建立失敗 |
+| `Avatar.speakDirectMode` | 播放失敗 / session 斷線 |
+| `WebChat.keepAliveHeyGen` | 保活失敗 |
+
+On any error:
+1. Shows semi-transparent overlay on `#heygen-player`: "系統忙碌中"
+2. Stops `AzureWebSTT` recording (if active), saves `wasRecording` state
+3. Stops HeyGen keep-alive timer
+4. Auto-retries every **3 seconds**, up to **5 times**
+5. On success: hides overlay, restarts keep-alive, restores STT if it was active
+6. After 5 failures: shows "服務暫時無法使用，請重新整理頁面" with a reload button
