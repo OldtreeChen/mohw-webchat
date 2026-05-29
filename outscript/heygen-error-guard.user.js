@@ -157,5 +157,27 @@
     overlay.style.display = 'flex';
   }
 
+  // ============ STT control ============
+
+  function stopSTT() {
+    if (typeof AzureWebSTT !== 'undefined' && AzureWebSTT.isRecording) {
+      State.wasRecording = true;
+      try { AzureWebSTT.stopRecording(); } catch (e) { /* ignore */ }
+      console.log('[HeyGenErrorGuard] STT recording stopped');
+    } else {
+      State.wasRecording = false;
+    }
+  }
+
+  function restoreSTT() {
+    if (State.wasRecording &&
+        typeof AzureWebSTT !== 'undefined' &&
+        AzureWebSTT.enableSTT) {
+      try { AzureWebSTT.startRecording(); } catch (e) { /* ignore */ }
+      console.log('[HeyGenErrorGuard] STT recording restored');
+    }
+    State.wasRecording = false;
+  }
+
   console.log('[HeyGenErrorGuard] userscript loaded v1.0.0');
 })();
