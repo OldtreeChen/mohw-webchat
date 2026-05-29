@@ -179,5 +179,62 @@
     State.wasRecording = false;
   }
 
+  // ============ ErrorGuard ============
+
+  const ErrorGuard = {
+    // 儲存 patch 前的原始 createDirectSession，供 retry 直接呼叫（跳過 patch 包裝）
+    _origCreateDirectSession: null,
+
+    onError(source, error) {
+      if (State.isError) return; // 防 cascade
+      console.warn(`[HeyGenErrorGuard] Error from [${source}]:`, error && error.message);
+      State.isError = true;
+      stopSTT();
+      if (typeof WebChat !== 'undefined') {
+        try { WebChat.stopHeyGenKeepAlive(); } catch (e) { /* ignore */ }
+      }
+      injectOverlay();
+      showOverlay();
+      scheduleRetry();
+    },
+  };
+
+  function scheduleRetry() {
+    if (State.retryCount >= MAX_RETRIES) {
+      console.warn('[HeyGenErrorGuard] Max retries reached. Showing fatal overlay.');
+      showFatalOverlay();
+      return;
+    }
+
+    State.retryTimerId = setTimeout(async () => {
+      State.retryCount++;
+      updateSubtitle(`正在嘗試重新連線... (第 ${State.retryCount} 次 / ${MAX_RETRIES})`);
+      console.log(`[HeyGenErrorGuard] Retry ${State.retryCount}/${MAX_RETRIES}`);
+
+      try {
+        // 清除舊 session
+        if (typeof Avatar !== 'undefined') {
+          try { await Avatar.stopConversation(); } catch (e) { /* ignore */ }
+        }
+        // 呼叫原始（未 patch）的 createDirectSession，避免觸發 patch 造成遞迴
+        await ErrorGuard._origCreateDirectSession.call(Avatar);
+
+        // 重連成功
+        console.log('[HeyGenErrorGuard] Reconnected successfully ✅');
+        State.isError = false;
+        State.retryCount = 0;
+        State.retryTimerId = null;
+        hideOverlay();
+        if (typeof WebChat !== 'undefined') {
+          try { WebChat.startHeyGenKeepAlive(); } catch (e) { /* ignore */ }
+        }
+        restoreSTT();
+      } catch (err) {
+        console.warn(`[HeyGenErrorGuard] Retry ${State.retryCount} failed:`, err && err.message);
+        scheduleRetry();
+      }
+    }, RETRY_INTERVAL_MS);
+  }
+
   console.log('[HeyGenErrorGuard] userscript loaded v1.0.0');
 })();
