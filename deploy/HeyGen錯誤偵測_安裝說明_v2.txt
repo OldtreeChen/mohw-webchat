@@ -1,0 +1,86 @@
+========================================
+  HeyGen 錯誤偵測功能 - 安裝說明
+  版本：1.0.0（網站內嵌版，無需擴充功能）
+  更新日期：2026-05-30
+========================================
+
+【功能說明】
+========================================
+
+當 HeyGen 虛擬人服務發生異常時，系統會自動：
+
+  1. 在虛擬人畫面顯示「系統忙碌中」遮罩訊息
+  2. 停止 STT 麥克風收音
+  3. 每 3 秒自動重試重新連線（最多 5 次）
+  4. 重連成功後自動恢復正常運作
+  5. 超過 5 次仍失敗則顯示「服務暫時無法使用，請重新整理頁面」
+
+
+【更新的檔案】
+========================================
+
+  需要更新以下 2 個檔案：
+
+  A. common/HeyGenErrorGuard.js   ← 新增（主程式）
+  B. index.html                   ← 修改（加入一行 script 載入）
+
+
+【安裝步驟】
+========================================
+
+  步驟 1：上傳新檔案
+  ─────────────────
+  將 HeyGenErrorGuard.js 上傳到網站伺服器的 common/ 目錄下：
+
+    /webchat/
+    └── common/
+        └── HeyGenErrorGuard.js    ← 上傳這個檔案
+
+
+  步驟 2：修改 index.html
+  ────────────────────────
+  在 index.html 中，找到這一行：
+
+    <script type="text/javascript" src="./common/WebChat.js?201904191045"></script>
+
+  在它的「下一行」插入：
+
+    <script type="text/javascript" src="./common/HeyGenErrorGuard.js"></script>
+
+  修改後應該看起來像這樣：
+
+    <script type="text/javascript" src="./common/WebChat.js?201904191045"></script>
+    <script type="text/javascript" src="./common/HeyGenErrorGuard.js"></script>   ← 新增這行
+    <script type="text/javascript" src="./common/RichMenu.js"></script>
+
+
+  步驟 3：清除瀏覽器快取後重新整理頁面
+
+
+【確認安裝成功】
+========================================
+
+  開啟 WebChat 頁面後，按 F12 開啟開發人員工具，
+  切換到 Console 標籤，若看到以下訊息代表安裝成功：
+
+    [HeyGenErrorGuard] v1.0.0 loaded
+    [HeyGenErrorGuard] Patching Avatar and WebChat...
+    [HeyGenErrorGuard] Patch complete ✅
+
+
+【注意事項】
+========================================
+
+  - 此檔案不修改 WebChat.js、Avatar.js 等現有程式碼
+  - 採用 monkey-patch 方式，啟動後自動掛載，無需額外設定
+  - 無需安裝任何瀏覽器擴充功能，所有使用者瀏覽即生效
+  - 若需停用：從 index.html 中移除該 <script> 標籤即可
+
+
+========================================
+  技術支援
+========================================
+
+若有問題請聯絡系統維護人員，並提供：
+  1. 瀏覽器版本
+  2. Console 中的錯誤訊息（F12 → Console）
