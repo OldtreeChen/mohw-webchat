@@ -1,0 +1,93 @@
+========================================
+  HeyGen 錯誤偵測外掛 - 安裝說明
+  版本：1.0.0
+  更新日期：2026-05-30
+========================================
+
+【功能說明】
+========================================
+
+當 HeyGen 虛擬人服務發生異常時，此外掛會自動：
+
+  1. 在虛擬人畫面顯示「系統忙碌中」遮罩訊息
+  2. 停止 STT 麥克風收音
+  3. 每 3 秒自動重試重新連線（最多 5 次）
+  4. 重連成功後自動恢復正常運作
+  5. 超過 5 次仍失敗則顯示「服務暫時無法使用，請重新整理頁面」
+
+
+【安裝前置需求】
+========================================
+
+請先安裝 Tampermonkey 瀏覽器擴充功能：
+
+  Chrome  : https://chrome.google.com/webstore/detail/tampermonkey/dhdgffkkebhmkfjojejmpbldmpobfkfo
+  Edge    : https://microsoftedge.microsoft.com/addons/detail/tampermonkey/iikmkjmpaadaobahmlepeloendndfphd
+  Firefox : https://addons.mozilla.org/firefox/addon/tampermonkey/
+
+
+【安裝步驟】
+========================================
+
+方式一：直接開啟安裝（推薦）
+
+  1. 確認 Tampermonkey 已安裝並啟用
+  2. 直接用瀏覽器開啟 heygen-error-guard.user.js 檔案
+     （拖曳到瀏覽器視窗，或從檔案總管雙擊開啟）
+  3. Tampermonkey 會自動出現安裝確認頁面
+  4. 點擊「安裝」按鈕完成
+
+方式二：透過 Tampermonkey 匯入
+
+  1. 點擊瀏覽器右上角的 Tampermonkey 圖示
+  2. 選擇「管理面板」（Dashboard）
+  3. 點擊「工具程式」（Utilities）標籤
+  4. 在「從檔案匯入」處，選擇 heygen-error-guard.user.js
+  5. 確認安裝
+
+
+【適用網址】
+========================================
+
+安裝後，外掛自動在以下網址啟用：
+
+  - https://ltcai.mohw.gov.tw/webchat/*
+  - https://rdqa.qbiai.com/1120mohwwebchat/*
+  - http://localhost/*
+  - http://127.0.0.1/*
+
+
+【確認安裝成功】
+========================================
+
+開啟 WebChat 頁面後，按 F12 開啟開發人員工具，
+切換到 Console 標籤，若看到以下訊息代表安裝成功：
+
+  [HeyGenErrorGuard] userscript loaded v1.0.0
+  [HeyGenErrorGuard] Patching Avatar and WebChat...
+  [HeyGenErrorGuard] Patch complete ✅
+
+
+【停用 / 移除】
+========================================
+
+  停用：Tampermonkey 管理面板 → 找到「HeyGen Error Guard for LTC WebChat」→ 切換開關
+  移除：Tampermonkey 管理面板 → 找到該腳本 → 點擊刪除
+
+
+【注意事項】
+========================================
+
+  - 本外掛不修改任何網站原始碼，採用 runtime 注入方式運作
+  - 若瀏覽器更新後外掛失效，請重新安裝
+  - 此外掛需搭配 HeyGen 虛擬人功能的 WebChat 系統使用
+
+
+========================================
+  技術支援
+========================================
+
+若有問題請聯絡系統維護人員，並提供：
+  1. 瀏覽器版本
+  2. Tampermonkey 版本
+  3. Console 中的錯誤訊息（F12 → Console）
